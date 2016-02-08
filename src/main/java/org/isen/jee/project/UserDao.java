@@ -32,13 +32,12 @@ public class UserDao {
     public User createNewUser() {
 
         User user = new User();
-        user.setEmail("romain.bouye@gmail.com");
         try {
         	
 //            ut.begin();
-        	em.getTransaction().begin();
-            em.persist(user);
-            em.getTransaction().commit();
+//        	em.getTransaction().begin();
+//            em.persist(user);
+//            em.getTransaction().commit();
 //            ut.commit();
 
 //        } catch ( NotSupportedException | SystemException | SecurityException

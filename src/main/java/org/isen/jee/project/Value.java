@@ -19,15 +19,15 @@ public class Value implements Serializable {
 
 	private Object value;
 
+	//bi-directional many-to-one association to Entry
+	@ManyToOne
+	@JoinColumn(name="ref_entry")
+	private Entry entry;
+
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="ref_user")
 	private User user;
-
-	//bi-directional many-to-one association to Entity
-	@ManyToOne
-	@JoinColumn(name="ref_entity")
-	private Entity entity;
 
 	public Value() {
 	}
@@ -48,20 +48,20 @@ public class Value implements Serializable {
 		this.value = value;
 	}
 
+	public Entry getEntry() {
+		return this.entry;
+	}
+
+	public void setEntry(Entry entry) {
+		this.entry = entry;
+	}
+
 	public User getUser() {
 		return this.user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Entity getEntity() {
-		return this.entity;
-	}
-
-	public void setEntity(Entity entity) {
-		this.entity = entity;
 	}
 
 }

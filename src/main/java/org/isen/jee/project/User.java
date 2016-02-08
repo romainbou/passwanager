@@ -31,9 +31,13 @@ public class User implements Serializable {
 
 	private String username;
 
-	//bi-directional many-to-one association to Folder
+	//bi-directional many-to-one association to Entry
 	@OneToMany(mappedBy="user")
-	private List<Folder> folders1;
+	private List<Entry> entries;
+
+	//bi-directional many-to-one association to Folder
+	@OneToMany(mappedBy="owner")
+	private List<Folder> ownedFolders;
 
 	//bi-directional many-to-many association to Folder
 	@ManyToMany
@@ -46,11 +50,7 @@ public class User implements Serializable {
 			@JoinColumn(name="folder_id")
 			}
 		)
-	private List<Folder> folders2;
-
-	//bi-directional many-to-one association to Entity
-	@OneToMany(mappedBy="user")
-	private List<Entity> entities;
+	private List<Folder> folders;
 
 	//bi-directional many-to-one association to Value
 	@OneToMany(mappedBy="user")
@@ -115,56 +115,55 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public List<Folder> getFolders1() {
-		return this.folders1;
+	public List<Entry> getEntries() {
+		return this.entries;
 	}
 
-	public void setFolders1(List<Folder> folders1) {
-		this.folders1 = folders1;
+	public void setEntries(List<Entry> entries) {
+		this.entries = entries;
 	}
 
-	public Folder addFolders1(Folder folders1) {
-		getFolders1().add(folders1);
-		folders1.setUser(this);
+	public Entry addEntry(Entry entry) {
+		getEntries().add(entry);
+		entry.setUser(this);
 
-		return folders1;
+		return entry;
 	}
 
-	public Folder removeFolders1(Folder folders1) {
-		getFolders1().remove(folders1);
-		folders1.setUser(null);
+	public Entry removeEntry(Entry entry) {
+		getEntries().remove(entry);
+		entry.setUser(null);
 
-		return folders1;
+		return entry;
 	}
 
-	public List<Folder> getFolders2() {
-		return this.folders2;
+	public List<Folder> getOwnedFolders() {
+		return this.ownedFolders;
 	}
 
-	public void setFolders2(List<Folder> folders2) {
-		this.folders2 = folders2;
+	public void setOwnedFolders(List<Folder> ownedFolders) {
+		this.ownedFolders = ownedFolders;
 	}
 
-	public List<Entity> getEntities() {
-		return this.entities;
+	public Folder addOwnedFolder(Folder ownedFolder) {
+		getOwnedFolders().add(ownedFolder);
+		ownedFolder.setOwner(this);
+		return ownedFolder;
 	}
 
-	public void setEntities(List<Entity> entities) {
-		this.entities = entities;
+	public Folder removeOwnedFolder(Folder ownedFolder) {
+		getOwnedFolders().remove(ownedFolder);
+		ownedFolder.setOwner(null);
+
+		return ownedFolder;
 	}
 
-	public Entity addEntity(Entity entity) {
-		getEntities().add(entity);
-		entity.setUser(this);
-
-		return entity;
+	public List<Folder> getFolders() {
+		return this.folders;
 	}
 
-	public Entity removeEntity(Entity entity) {
-		getEntities().remove(entity);
-		entity.setUser(null);
-
-		return entity;
+	public void setFolders(List<Folder> folders) {
+		this.folders = folders;
 	}
 
 	public List<Value> getValues() {

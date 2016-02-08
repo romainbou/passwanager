@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="passwanager" transaction-type="RESOURCE_LOCAL">
-    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>org.isen.jee.project.User</class>
+    <class>org.isen.jee.project.Entry</class>
     <class>org.isen.jee.project.Folder</class>
-    <class>org.isen.jee.project.Entity</class>
     <class>org.isen.jee.project.Value</class>
     <properties>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
-      <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-      <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.connection.username" value="passwanager"/>
-      <property name="hibernate.connection.password" value="i4BKwffH244SdtfR"/>
-      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/passwanager"/>
-      <property name="hibernate.max_fetch_depth" value="3"/>
+          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+          <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+          <property name="hibernate.show_sql" value="true"/>
+          <property name="hibernate.connection.username" value="passwanager"/>
+          <property name="hibernate.connection.password" value="i4BKwffH244SdtfR"/>
+          <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/passwanager"/>
+          <property name="hibernate.max_fetch_depth" value="3"/>
     </properties>
   </persistence-unit>
 </persistence>
@@ -24,7 +26,10 @@
 
 	<persistence-unit name="passwanager" transaction-type="RESOURCE_LOCAL" >
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>org.isen.jee.project.User</class>
+		    <class>org.isen.jee.project.User</class>
+	    <class>org.isen.jee.project.Folder</class>
+	    <class>org.isen.jee.project.Value</class>
+	    <class>org.isen.jee.project.Entry</class>
 		<properties>
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/passwanager" />

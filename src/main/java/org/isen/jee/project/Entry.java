@@ -7,13 +7,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the entity database table.
+ * The persistent class for the entry database table.
  * 
  */
 @Entity
-@Table(name="entity")
-@NamedQuery(name="Entity.findAll", query="SELECT e FROM Entity e")
-public class Entity implements Serializable {
+@Table(name="entry")
+@NamedQuery(name="Entry.findAll", query="SELECT e FROM Entry e")
+public class Entry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,21 +23,21 @@ public class Entity implements Serializable {
 	@Column(name="created_at")
 	private Date createdAt;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="ref_user")
-	private User user;
-
 	//bi-directional many-to-one association to Folder
 	@ManyToOne
 	@JoinColumn(name="ref_folder")
 	private Folder folder;
 
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="ref_user")
+	private User user;
+
 	//bi-directional many-to-one association to Value
-	@OneToMany(mappedBy="entity")
+	@OneToMany(mappedBy="entry")
 	private List<Value> values;
 
-	public Entity() {
+	public Entry() {
 	}
 
 	public int getId() {
@@ -56,20 +56,20 @@ public class Entity implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Folder getFolder() {
 		return this.folder;
 	}
 
 	public void setFolder(Folder folder) {
 		this.folder = folder;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public List<Value> getValues() {
@@ -82,14 +82,14 @@ public class Entity implements Serializable {
 
 	public Value addValue(Value value) {
 		getValues().add(value);
-		value.setEntity(this);
+		value.setEntry(this);
 
 		return value;
 	}
 
 	public Value removeValue(Value value) {
 		getValues().remove(value);
-		value.setEntity(null);
+		value.setEntry(null);
 
 		return value;
 	}

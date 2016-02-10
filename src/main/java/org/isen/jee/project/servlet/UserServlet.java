@@ -18,7 +18,6 @@ import com.cedarsoftware.util.io.JsonWriter;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
-
 	/**
 	 * 
 	 */

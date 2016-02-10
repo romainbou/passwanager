@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import junit.framework.Assert;
+
 import org.eclipse.persistence.oxm.JSONWithPadding;
 import org.isen.jee.project.harness.JettyHarness;
 import org.junit.Test;

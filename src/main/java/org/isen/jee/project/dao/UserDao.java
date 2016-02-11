@@ -20,8 +20,8 @@ public class UserDao {
     	try {
     		em.getTransaction().begin();
         	em.persist(user);
-        	em.flush(); // not to id 0
-        	em.refresh(user);
+//        	em.flush(); // not to id 0
+//        	em.refresh(user);
     		em.getTransaction().commit();
     		
     	} catch (SecurityException | IllegalStateException e) {
@@ -30,8 +30,7 @@ public class UserDao {
     	return user;
     }
     
-    public User createNewUser(String email, String firstname, String lastname, String username, String password) {
-
+    public User createNewUser(String email, String firstname, String lastname, String username, String password, String publicKey){
         User user = new User();
         try {
         	user.setEmail(email);
@@ -39,11 +38,12 @@ public class UserDao {
         	user.setLastname(lastname);
         	user.setUsername(username);
         	user.setPassword(password);
+        	user.setPublicKey(publicKey);
         	System.out.println("user id: " + user.getId());
         	em.getTransaction().begin();
         	em.persist(user);
-        	em.flush(); // not to id 0
-        	em.refresh(user);
+//        	em.flush(); // not to id 0
+//        	em.refresh(user);
         	em.getTransaction().commit();
 
         } catch (SecurityException | IllegalStateException e) {
@@ -71,6 +71,23 @@ public class UserDao {
     	} catch (SecurityException | IllegalStateException | NoResultException e) {
             return null;
         }
+    }
+    
+    public Boolean delete(String email){
+    	boolean done = false;
+    	try{
+    		em.getTransaction().begin();
+    		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")
+    			.setParameter("email", email).getSingleResult();
+    		if(foundUser != null){
+    			em.remove(foundUser);
+    			done = true;
+    		}
+    		em.getTransaction().commit();
+    	}  catch (SecurityException | IllegalStateException | NoResultException e) {
+            return done;
+        }
+    	return done;
     }
     
     public List<User> getAll(){

@@ -1,4 +1,4 @@
-package org.isen.jee.project.servlet.user;
+package org.isen.jee.project.servlet.folder;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,8 +16,8 @@ import org.isen.jee.project.dao.UserDao;
 import com.cedarsoftware.util.io.JsonWriter;
 
 
-@WebServlet("/user")
-public class UserServlet extends HttpServlet {
+@WebServlet("/folder")
+public class FolderServlet extends HttpServlet {
 	/**
 	 * 
 	 */
@@ -26,9 +26,9 @@ public class UserServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		UserDao userDao = new UserDao();
-		List users = userDao.getAll();
-		String usersString = JsonWriter.objectToJson(users);
+		FolderDao folderDao = new FolderDao();
+		List folders = folderDao.getAll();
+		String usersString = JsonWriter.objectToJson(folders);
 		resp.getWriter().print(usersString);
 		
 	}

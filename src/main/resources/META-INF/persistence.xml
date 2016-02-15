@@ -8,7 +8,6 @@
     <class>org.isen.jee.project.model.Entry</class>
     <class>org.isen.jee.project.model.Folder</class>
     <class>org.isen.jee.project.model.Value</class>
-    <class>org.isen.jee.project.model.Entry</class>
     <properties>
         <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
         <property name="eclipselink.jdbc.url"  value="jdbc:mysql://localhost:3306/passwanager"/>

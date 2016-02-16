@@ -4,6 +4,9 @@
   <persistence-unit name="passwanager" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>org.isen.jee.project.User</class>
+    <class>org.isen.jee.project.Folder</class>
+    <class>org.isen.jee.project.Entity</class>
+    <class>org.isen.jee.project.Value</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

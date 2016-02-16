@@ -1,4 +1,4 @@
-package org.isen.jee.project;
+package org.isen.jee.project.servlet;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;

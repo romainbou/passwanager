@@ -1,5 +1,6 @@
-package org.isen.jee.project;
+package org.isen.jee.project.model;
 
+import org.isen.jee.project.dao.UserDao;
 import org.junit.Before;
 import org.junit.Test;
 

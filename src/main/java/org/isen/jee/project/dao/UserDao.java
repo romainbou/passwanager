@@ -1,4 +1,4 @@
-package org.isen.jee.project;
+package org.isen.jee.project.dao;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -11,6 +11,8 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+
+import org.isen.jee.project.model.User;
 
 
 public class UserDao {

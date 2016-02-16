@@ -1,4 +1,4 @@
-package org.isen.jee.project;
+package org.isen.jee.project.servlet;
 
 import java.io.IOException;
 import java.util.Optional;

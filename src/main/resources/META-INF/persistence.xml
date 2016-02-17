@@ -9,22 +9,11 @@
     <class>org.isen.jee.project.model.Folder</class>
     <class>org.isen.jee.project.model.Value</class>
     <properties>
-        <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-        <property name="eclipselink.jdbc.url"  value="jdbc:mysql://localhost:3306/passwanager"/>
-        <property name="eclipselink.jdbc.user" value="passwanager"/>
-        <property name="eclipselink.jdbc.password" value="i4BKwffH244SdtfR"/>
-    
-    	<!-- 
-    
-          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-          <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-          <property name="hibernate.show_sql" value="true"/>
-          <property name="hibernate.connection.username" value="passwanager"/>
-          <property name="hibernate.connection.password" value="i4BKwffH244SdtfR"/>
-          <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/passwanager"/>
-          <property name="hibernate.max_fetch_depth" value="3"/>
-          -->
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="javax.persistence.jdbc.url"  value="jdbc:mysql://localhost:3306/passwanager"/>
+        <property name="javax.persistence.jdbc.user" value="passwanager"/>
+        <property name="javax.persistence.jdbc.password" value="i4BKwffH244SdtfR"/>
+
     </properties>
   </persistence-unit>
 </persistence>

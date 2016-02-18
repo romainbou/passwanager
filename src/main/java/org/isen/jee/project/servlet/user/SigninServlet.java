@@ -37,7 +37,7 @@ public class SigninServlet extends HttpServlet {
     	if(foundUser != null){
     		req.getSession().setAttribute("user", foundUser);
     		String sessionId = req.getSession().getId();
-    		resp.getWriter().print(sessionId);
+    		resp.getWriter().print("{ \"session_id\": \"" + sessionId + "\" }");
     		return;
     	} else {
     		resp.setStatus(422);

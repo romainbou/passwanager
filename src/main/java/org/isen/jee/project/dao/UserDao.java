@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 
 
@@ -85,6 +86,10 @@ public class UserDao {
     		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")
     			.setParameter("email", email).getSingleResult();
     		if(foundUser != null){
+    			List<Folder> ownedFolder = foundUser.getOwnedFolders();
+    			for (Folder folder : ownedFolder) {
+					em.remove(folder);
+				}
     			em.remove(foundUser);
     			done = true;
     		}

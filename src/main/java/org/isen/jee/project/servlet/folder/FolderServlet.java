@@ -13,6 +13,7 @@ import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 
+import com.cedarsoftware.util.io.JsonObject;
 import com.cedarsoftware.util.io.JsonWriter;
 
 
@@ -22,21 +23,37 @@ public class FolderServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	
+	private User loginUser(HttpServletRequest req, HttpServletResponse resp){
 		String sessionId = req.getParameter("session_id");
 		if(sessionId == null || sessionId.isEmpty()){
     		resp.setStatus(401);
-    		resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
-    		return;
+    		try {
+				resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		return null;
 		}
 		User currentUser = (User) req.getSession().getAttribute("user");
 		if(currentUser == null){
     		resp.setStatus(401);
-    		resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
-    		return;
+    		try {
+				resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		return null;
+		}
+		return currentUser;
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		User currentUser = loginUser(req, resp);
+		if(currentUser == null){
+			return;
 		}
 		
 		UserDao userDao = new UserDao();
@@ -45,5 +62,21 @@ public class FolderServlet extends HttpServlet {
 		String usersString = JsonWriter.objectToJson(folders.toArray());
 		resp.getWriter().print(usersString);
 		
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		User currentUser = loginUser(req, resp);
+		if(currentUser == null){
+			return;
+		}
+		
+		String name = req.getParameter("name");
+    	String colaborators = req.getParameter("colaborators");
+    	
+    	System.out.println(colaborators);
+    	
+    	return;
 	}
 }

@@ -20,6 +20,9 @@ public class SigninServletTest extends JettyHarness {
      *
      * @throws Exception
      */
+	public String getServletUri() {
+		return getBaseUri() + "/user/signin";
+	}
    
 	@Test
 	public void singinWithoutEmail() throws Exception {
@@ -47,8 +50,5 @@ public class SigninServletTest extends JettyHarness {
         assertEquals(200, postAndGetStatusCode(getServletUri(), params));
     }
     
-    private String getServletUri() {
-        return getBaseUri() + "/user/signin";
-    }
 
 }

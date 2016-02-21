@@ -20,6 +20,10 @@ public class SignupServletTest extends JettyHarness {
      *
      * @throws Exception
      */
+	private String getServletUri() {
+		return getBaseUri() + "/user/signup";
+	}
+	
     @Test
     public void singupValidUser() throws Exception {
     	UserDao userDao = new UserDao();
@@ -37,8 +41,5 @@ public class SignupServletTest extends JettyHarness {
         assertEquals(200, postAndGetStatusCode(getServletUri(), params));
     }
     
-    private String getServletUri() {
-        return getBaseUri() + "/user/signup";
-    }
 
 }

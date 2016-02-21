@@ -53,8 +53,8 @@ public class FolderServletTest extends JettyHarness {
 	public void tryToGetExistingFolder() throws Exception {
 		
 		String sessionId = setupUserSession();
-    	Map<String, String> params = new HashMap<>();
-        params.put("session_id", sessionId);
+		Map<String, String> params = new HashMap<>();
+		params.put("session_id", sessionId);
 		
 		FolderDao folderDao = new FolderDao();
 		UserDao userDao = new UserDao();
@@ -63,5 +63,20 @@ public class FolderServletTest extends JettyHarness {
 		
 		assertEquals(200, getWithParamsAndGetStatusCode(getServletUri(), params));  
 	}
+	
+	
+	@Test
+	public void createAdNewFolder() throws Exception {
+		
+		String sessionId = setupUserSession();
+    	Map<String, String> params = new HashMap<>();
+        params.put("session_id", sessionId);
+        params.put("name", "super_secret");
+        params.put("colaborators", "bar@foo.com, foo@bar.com");
+		
+		assertEquals(200, postAndGetStatusCode(getServletUri(), params));  
+	}
+	
+	
 
 }

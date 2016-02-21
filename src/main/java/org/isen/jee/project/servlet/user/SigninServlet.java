@@ -21,10 +21,15 @@ import com.cedarsoftware.util.io.JsonWriter;
 public class SigninServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private void setHeaders(HttpServletResponse resp){
+		resp.addHeader("Access-Control-Allow-Origin", "*");
+		resp.addHeader("Content-Type", "application/json");
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		setHeaders(resp);
     	String email = req.getParameter("email");
     	String password = req.getParameter("password");
     	if(email == null || password == null || email.isEmpty() || password.isEmpty()){

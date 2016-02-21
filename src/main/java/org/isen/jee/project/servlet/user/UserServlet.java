@@ -25,6 +25,7 @@ public class UserServlet extends HttpServlet {
 	
 	private void setHeaders(HttpServletResponse resp){
 		resp.addHeader("Access-Control-Allow-Origin", "*");
+		resp.addHeader("Content-Type", "application/json");
 	}
 
 	@Override

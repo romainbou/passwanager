@@ -19,6 +19,7 @@ public class PasswanagerServlet extends HttpServlet {
 	
 	private void setHeaders(HttpServletResponse resp){
 		resp.addHeader("Access-Control-Allow-Origin", "*");
+		resp.addHeader("Content-Type", "application/json");
 	}
 
 	@Override

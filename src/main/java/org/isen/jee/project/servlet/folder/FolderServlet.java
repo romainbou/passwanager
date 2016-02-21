@@ -1,6 +1,7 @@
 package org.isen.jee.project.servlet.folder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
@@ -26,6 +28,7 @@ public class FolderServlet extends HttpServlet {
 	
 	private void setHeaders(HttpServletResponse resp){
 		resp.addHeader("Access-Control-Allow-Origin", "*");
+		resp.addHeader("Content-Type", "application/json");
 	}
 	
 	private User loginUser(HttpServletRequest req, HttpServletResponse resp){
@@ -71,13 +74,26 @@ public class FolderServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		setHeaders(resp);
+		FolderDao folderDao = new FolderDao();
+		UserDao userDao = new UserDao();
 		User currentUser = loginUser(req, resp);
 		if(currentUser == null){
 			return;
 		}
 		
 		String name = req.getParameter("name");
-    	String colaborators = req.getParameter("colaborators");
+    	String colaboratorsString = req.getParameter("colaborators");
+    	String[] colaborators = colaboratorsString.split(",", -1);
+    	
+    	Folder newFolder = folderDao.createNewFolder(name, currentUser);
+    	List<User> users = new ArrayList<User>();
+    	for (String colaborator : colaborators) {
+    		User currentColab = userDao.findByEmail(colaborator);
+    		if(currentColab != null){
+    			users.add(currentColab);
+    		}
+		}
+    	newFolder.setUsers(users);
     	
     	System.out.println(colaborators);
     	

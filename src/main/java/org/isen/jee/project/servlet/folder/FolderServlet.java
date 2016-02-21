@@ -2,8 +2,12 @@ package org.isen.jee.project.servlet.folder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonString;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +62,12 @@ public class FolderServlet extends PasswanagerServlet {
 			}
 		}
 		
-		
-		String usersString = JsonWriter.objectToJson(folders.toArray());
+		ArrayList<String> al = new ArrayList();
+		for (Iterator iterator = folders.iterator(); iterator.hasNext();) {
+			Folder folder = (Folder) iterator.next();
+			al.add(JsonWriter.objectToJson(folder));
+		}
+		String usersString = JsonWriter.objectToJson(al);
 		resp.getWriter().print(usersString);
 		
 	}

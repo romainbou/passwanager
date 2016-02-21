@@ -1,24 +1,21 @@
-function timeConverter(UNIX_timestamp){
-var a = new Date(UNIX_timestamp);
-var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var year = a.getFullYear();
-var month = months[a.getMonth()];
-var date = a.getDate();
-var hour = a.getHours();
-var min = a.getMinutes();
-var sec = a.getSeconds();
-var time = date + ' ' + month + ' ' + year + ' - ' + hour + ':' + min ;
-return time;
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
-
 
 $(document).ready(function() {
 
   $('body').hide();
 
+  var id_params = getURLParameter("id");
+
+  if(id_params == undefined || !$.isNumeric(id_params)) {
+    window.location.replace("index.html");
+  }
+
   $.ajax({
     method: "GET",
     url: serverURL +"/folder",
+    data: {"id" : id_params},
     crossDomain: true,
     xhrFields: {
       withCredentials: true
@@ -27,46 +24,38 @@ $(document).ready(function() {
   })
   .success(function(dataReceived) {
     console.log(dataReceived);
-    var elements = dataReceived["@items"];
 
-    if(elements) {
-      for (var i = 0; i < elements.length; i++) {
-        var item = JSON.parse(elements[i]);
+    if(dataReceived) {
 
-        var owner = item.owner.firstname + " " + item.owner.lastname;
-        if(item.owner.email == sessionStorage.getItem("email")) {
-          owner = "You";
-        }
-
-        var confidential = "Private";
-        if(item.users.length > 1) {
-          confidential = "Shared with: "
-          //@TODO
-        }
-
-
-
-        var elem = $(`<div class="list-group-item">
-        <div class="row-action-primary">
-            <i class="material-icons">folder</i>
-          </div>
-          <div class="row-content">
-            <div class="least-content" style="text-align:right">` + timeConverter(item.createdAt) + `<br><a href="#"><i class="material-icons">delete</i></a> </div>
-            <h4 class="list-group-item-heading"><a href="folder.html?id=`+item.id+`">`+item.name+`</a></h4>
-
-            <p class="list-group-item-text">Owner: `+ owner +` - `+ confidential +`</p>
-          </div>
-        </div>
-        <div class="list-group-separator"></div>`);
-
-        $('#folders-table').append(elem);
+      var owner = dataReceived.owner.firstname + " " + dataReceived.owner.lastname;
+      if(dataReceived.owner.email == sessionStorage.getItem("email")) {
+        owner = "You";
       }
+
+      $('#title-folder').html(dataReceived.name);
+
+      var elem = $(`<tr>
+        <td>2</td>
+        <td>FTP</td>
+        <td>parkki@bouye.fr</td>
+        <td>
+          <span class="value"></span>
+          <span class="to-display"><a href="javascript:void(0)" class="click-to-display">Click to display</a></span>
+          <span class="to-copy"> ou <a href="javascript:void(0)" class="click-to-copy" data-toggle=snackbar data-content="Your password has been copied to the clipboard...">click to copy</a></span>
+          <span class="to-hide"> <a href="javascript:void(0)" class="hide-value">Hide the password</a></span>
+        </td>
+        <td></td>
+        <td></td>
+        <td>Thibault Itart-Longueville</td>
+        <td><a href="#"><i class="material-icons">delete</i></a></td>
+      </tr>`);
+
+      $('#folders-table').append(elem);
     }
   })
   .error(function(data) {
     sessionStorage.clear();
     window.location.replace("sigin.html");
-
   })
   .complete(function() {
     $('body').show();

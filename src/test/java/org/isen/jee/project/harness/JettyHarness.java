@@ -24,6 +24,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.eclipse.jetty.server.Server;
@@ -108,6 +109,52 @@ public class JettyHarness {
         return executeAndReturnResult(get);
     }
 
+    public String getWithParams(String uri, Map<String, String> params) {
+    	
+    	StringBuilder requestUrl = new StringBuilder(uri);
+    	
+    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+    	for (Entry<String, String> paramEntry : params.entrySet()) {
+    		nameValuePairs.add(new BasicNameValuePair(paramEntry.getKey(), paramEntry.getValue()));
+    	}    		
+    	
+    	String querystring = URLEncodedUtils.format(nameValuePairs, "utf-8");
+    	requestUrl.append("?");
+    	requestUrl.append(querystring);
+    	
+    	HttpClient httpclient = new DefaultHttpClient();
+    	HttpGet get = new HttpGet(requestUrl.toString());
+    	return executeAndReturnResult(get);
+    	
+    }
+    
+    public int getWithParamsAndGetStatusCode(String uri, Map<String, String> params) {
+    	    	
+    	StringBuilder requestUrl = new StringBuilder(uri);
+    	
+    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+    	for (Entry<String, String> paramEntry : params.entrySet()) {
+    		nameValuePairs.add(new BasicNameValuePair(paramEntry.getKey(), paramEntry.getValue()));
+    	}    		
+    		
+		String querystring = URLEncodedUtils.format(nameValuePairs, "utf-8");
+		requestUrl.append("?");
+		requestUrl.append(querystring);
+		
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpGet get = new HttpGet(requestUrl.toString());
+		try{
+        	HttpResponse response = httpClient.execute(get);
+        	int responseCode = response.getStatusLine().getStatusCode();
+        	return responseCode;
+	    } catch (IOException e) {
+	        throw new WebRuntimeException(500, e.getMessage());
+	    } finally {
+	        get.releaseConnection();
+	    }
+
+    }
+    
     public String delete(String uri) {
         HttpDelete delete = new HttpDelete(uri);
         return executeAndReturnResult(delete);

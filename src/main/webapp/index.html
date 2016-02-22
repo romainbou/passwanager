@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Passwanager</title>
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="bower_components/snackbarjs/dist/snackbar.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  </head>
+  <body>
+
+    <div class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">×</button>
+            <h2 class="modal-title">New folder</h2>
+          </div>
+          <form id="form-add-new-folder">
+            <div class="modal-body">
+
+              <div class="alert alert-dismissible alert-danger" style="display:none;" id="errors-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Errors!</strong><br>
+                <ul id="errors-list"></ul>
+              </div>
+
+              <div class="form-group label-floating">
+                <label class="control-label" for="folderName">Folder name</label>
+                <input class="form-control" id="folderName" type="text">
+              </div>
+
+              <div class="form-group" id="share-with-list">
+                <h4>Share with...</h4>
+                <label class="control-label" for="addon1">Email address or username used on Passwanager</label>
+                <div class="input-group">
+                  <input type="text" id="shared1" class="form-control share-value">
+                  <span class="input-group-btn">
+                      <a href="javascript:void(0)" class="btn btn-primary btn-fab btn-fab-mini" id="add-share-button"><i class="material-icons">add</i></a>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer" style="padding-bottom: 20px;">
+              <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-raised btn-lg" data-toggle=snackbar data-content="This is my awesome snackbar!" id="button-add-new-folder">New folder</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="bs-component">
+          <div class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">Passwanager<div class="ripple-container"></div></span>
+              </div>
+              <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="javascript:void(0)">Your folders</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="javascript:void(0)" id="button-logout">Logout <span id="display-email-address"></span><div class="ripple-container"></div></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h3 class="title">Your folders</h3>
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">folder</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading"><a href="folder.html">Parkki</a></h4>
+
+              <p class="list-group-item-text">Shared with: Romain Bouyé, Baptiste Waels and Pierre-Julien Harbonnier</p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">folder</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">10m</div>
+              <h4 class="list-group-item-heading"><a href="folder.html">ISEN</a></h4>
+
+              <p class="list-group-item-text">Private</p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">folder</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">8m</div>
+              <h4 class="list-group-item-heading"><a href="folder.html">Web</a></h4>
+
+              <p class="list-group-item-text">Private</p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="add-button">
+      <a href="javascript:void(0)" class="btn btn-primary btn-fab" id="add-folder-modal"><i class="material-icons">add</i></a>
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="js/isConnected.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="bower_components/snackbarjs/dist/snackbar.min.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

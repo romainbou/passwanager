@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Passwanager</title>
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  </head>
+  <body>
+
+    <div class="login-box" id="login-box">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>Sign up to Passwanager</h3>
+
+          <div class="alert alert-dismissible alert-danger" style="display:none;" id="errors-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Errors!</strong><br>
+            <ul id="errors-list"></ul>
+          </div>
+
+          <form id="form-sign-up">
+            <div class="form-group email-form-group">
+              <input type="email" class="form-control" id="email" placeholder="Email address">
+            </div>
+            <div class="form-group firstname-form-group">
+              <input type="text" class="form-control" id="firstname" placeholder="Firstname">
+            </div>
+            <div class="form-group lastname-form-group">
+              <input type="text" class="form-control" id="lastname" placeholder="Lastname">
+            </div>
+            <div class="form-group username-form-group">
+              <input type="text" class="form-control" id="username" placeholder="Username">
+            </div>
+            <div class="form-group password-form-group">
+              <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group verify-password-form-group">
+              <input type="password" class="form-control" id="verify-password" placeholder="Verify password">
+            </div>
+
+            <button type="submit" class="btn btn-raised btn-primary" id="button-sign-up">Sign up</button>
+          </form>
+          <div class="align-right"><a href="signin.html">Sign in to Passwanager</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="login-box" id="keys-box">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>Welcome!</h3>
+
+          <p>Your private and public keys. Save them in a safe space disk.</p>
+
+          <h4>Public key</h4>
+          <textarea class="form-control" style="height:150px; font-size:11px;" id="textarea-public-key"></textarea>
+          <button class="btn btn-raised btn-primary" id="button-public-key-copy" data-toggle="snackbar" data-content="Your public key has been copied to the clipboard...">Copy public key</button>
+
+          <h4>Private key</h4>
+          <textarea class="form-control" style="height:200px; font-size:11px;" id="textarea-private-key"></textarea>
+          <button class="btn btn-raised btn-primary" id="button-private-key-copy" data-toggle="snackbar" data-content="Your private key has been copied to the clipboard...">Copy private key</button>
+        </div>
+        <div class="align-right"><a href="index.html"><button class="btn btn-raised btn-primary" style="margin-right:10px">I copied my keys, let's go!</button></a></div>
+      </div>
+    </div>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="js/forge.bundle.js"></script>
+    <script src="js/base.js"></script>
+  </body>
+</html>

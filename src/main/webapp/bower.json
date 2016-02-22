@@ -1,0 +1,26 @@
+{
+  "name": "passwanager",
+  "authors": [
+    "Thibault Itart-Longueville <thibault@itart-longueville.fr>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.1",
+    "bootstrap-material-design": "~0.5.8",
+    "snackbarjs": "~1.1.0"
+  },
+  "resolutions": {
+    "jquery": "~2.1.1"
+  }
+}

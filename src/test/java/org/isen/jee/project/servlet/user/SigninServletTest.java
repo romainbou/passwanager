@@ -39,12 +39,12 @@ public class SigninServletTest extends JettyHarness {
     	UserDao userDao = new UserDao();
     	String email = "bar@foo.com";
     	if(userDao.findByEmail(email) == null){
-    		userDao.createNewUser(email, "john", "doe", "john_tester", "hackMe");
+    		userDao.createNewUser(email, "john", "doe", "john_tester", "hackMe", "securePK");
     	}
     	Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", "hackMe");
-        assertEquals(200, postAndGetStatusCode(getServletUri(), params));  
+        assertEquals(200, postAndGetStatusCode(getServletUri(), params));
     }
     
     private String getServletUri() {

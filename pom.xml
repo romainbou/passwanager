@@ -47,12 +47,6 @@
 			<artifactId>jetty-maven-plugin</artifactId>
 			<version>${jetty.version}</version>
 			  <configuration>
-			    <contextHandlers>
-			      <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
-			        <contextPath>/static</contextPath>
-			        <resourceBase>src/main/webapp/static/</resourceBase>
-			      </contextHandler>
-			    </contextHandlers>
 				<scanIntervalSeconds>3</scanIntervalSeconds>
 			</configuration>
 		</plugin>

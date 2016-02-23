@@ -59,7 +59,7 @@ public class FolderServlet extends PasswanagerServlet {
 					}
 					String folderEntries = JsonWriter.objectToJson(entries);
 					jsonFolder = JsonWriter.objectToJson(folder);
-					jsonFolder = "{ \"folder:\":"+ jsonFolder +
+					jsonFolder = "{ \"folder:\": "+ jsonFolder +
 							     ", \"entries\":" + folderEntries + " }";
 					
 					found = true;
@@ -108,5 +108,29 @@ public class FolderServlet extends PasswanagerServlet {
 		resp.getWriter().print(folderJson);
     	
     	return;
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		User currentUser = loginUser(req, resp);
+		List<Folder> folders = currentUser.getFolders();
+		FolderDao folderDao = new FolderDao();
+		
+		String folderId = req.getParameter("id");
+		if(folderId != null && !folderId.isEmpty()){
+			boolean found = false;
+			for (Folder folder : folders) {
+				if(folderId.equals(Integer.toString(folder.getId()))){
+					folderDao.delete(folder.getId());
+					found = true;
+				}
+			}
+			if(found){
+				resp.getWriter().print("{\"success\": \"ok\"}");
+				return;
+			}
+		}
+		resp.getWriter().print("{\"error\": \"No folder deleted\"}");
+		return;
 	}
 }

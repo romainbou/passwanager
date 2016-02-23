@@ -35,7 +35,6 @@ public class SigninServlet extends PasswanagerServlet {
     		return;
     	}
     	UserDao userDao = new UserDao();
-    	System.out.println(password);
     	User foundUser = userDao.signin(email, password);
     	if(foundUser != null){
     		req.getSession().setAttribute("user", foundUser);

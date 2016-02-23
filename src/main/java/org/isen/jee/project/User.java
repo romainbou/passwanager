@@ -27,7 +27,7 @@ public class User implements Serializable {
 	private String password;
 
 	@Column(name="public_key")
-	private Object publicKey;
+	private String publicKey;
 
 	private String username;
 
@@ -99,11 +99,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public Object getPublicKey() {
+	public String getPublicKey() {
 		return this.publicKey;
 	}
 
-	public void setPublicKey(Object publicKey) {
+	public void setPublicKey(String publicKey) {
 		this.publicKey = publicKey;
 	}
 

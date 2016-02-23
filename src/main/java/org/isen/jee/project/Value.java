@@ -17,7 +17,7 @@ public class Value implements Serializable {
 	@Id
 	private int id;
 
-	private Object value;
+	private String value;
 
 	//bi-directional many-to-one association to Entry
 	@ManyToOne
@@ -40,11 +40,11 @@ public class Value implements Serializable {
 		this.id = id;
 	}
 
-	public Object getValue() {
+	public String getValue() {
 		return this.value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

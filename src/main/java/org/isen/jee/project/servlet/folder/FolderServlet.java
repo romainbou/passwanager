@@ -85,7 +85,6 @@ public class FolderServlet extends HttpServlet {
     	String colaboratorsString = req.getParameter("colaborators");
     	String[] colaborators = colaboratorsString.split(",", -1);
     	
-    	Folder newFolder = folderDao.createNewFolder(name, currentUser);
     	List<User> users = new ArrayList<User>();
     	for (String colaborator : colaborators) {
     		User currentColab = userDao.findByEmail(colaborator);
@@ -93,9 +92,10 @@ public class FolderServlet extends HttpServlet {
     			users.add(currentColab);
     		}
 		}
-    	newFolder.setUsers(users);
+    	Folder newFolder = folderDao.createNewFolder(name, currentUser, users);
     	
-    	System.out.println(colaborators);
+    	String folderJson = JsonWriter.objectToJson(newFolder);
+		resp.getWriter().print(folderJson);
     	
     	return;
 	}

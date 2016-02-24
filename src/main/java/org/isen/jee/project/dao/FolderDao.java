@@ -29,6 +29,33 @@ public class FolderDao {
     	return folder;
     }
     
+    public Folder createNewFolder(String name, User owner, List<User> users){
+    	Folder folder = new Folder();
+    	try {
+    		folder.setName(name);
+    		folder.setOwner(owner);
+    		Date now = new Date();
+    		folder.setCreatedAt(now);
+    		users.add(owner);
+    		folder.setUsers(users);
+    		List<Folder> ownerFolders = owner.getFolders();
+    		if(ownerFolders == null){
+    			ownerFolders = new ArrayList<Folder>();
+    		}
+    		ownerFolders.add(folder);
+    		owner.setFolders(ownerFolders);
+    		
+    		em.getTransaction().begin();
+    		em.persist(folder);
+    		em.merge(owner);
+    		em.getTransaction().commit();
+    		
+    	} catch (SecurityException | IllegalStateException e) {
+    		return null;
+    	}
+    	return folder;
+    }
+    
     public Folder createNewFolder(String name, User owner){
         Folder folder = new Folder();
         try {

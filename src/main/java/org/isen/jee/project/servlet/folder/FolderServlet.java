@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
+import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.PasswanagerServlet;
@@ -57,8 +58,10 @@ public class FolderServlet extends PasswanagerServlet {
 						entries.add(JsonWriter.objectToJson(entry));
 					}
 					String folderEntries = JsonWriter.objectToJson(entries);
-					jsonFolder = JsonWriter.objectToJson(folder);
-					jsonFolder = "{ \"folder\":"+ jsonFolder +", \"entries\":" + folderEntries + " }";
+					String jsonFolderE = JsonWriter.objectToJson(folder);
+					String folder2 = jsonFolderE.replaceAll("\"","\\\"");
+					String entries2 = folderEntries.replaceAll("\"","\\\"");
+					jsonFolder = "{\"folder\":"+ folder2 +", \"entries\": "+ entries2 +"}";
 					found = true;
 				}
 			}

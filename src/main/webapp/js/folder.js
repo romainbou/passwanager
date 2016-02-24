@@ -23,42 +23,45 @@ $(document).ready(function() {
     dataType: 'json'
   })
   .success(function(dataReceived) {
-    console.log('success');
     console.log(dataReceived);
 
     if(dataReceived) {
 
-      var owner = dataReceived.owner.firstname + " " + dataReceived.owner.lastname;
-      if(dataReceived.owner.email == sessionStorage.getItem("email")) {
+      var owner = dataReceived.folder.owner.firstname + " " + dataReceived.folder.owner.lastname;
+      if(dataReceived.folder.owner.email == sessionStorage.getItem("email")) {
         owner = "You";
       }
 
-      $('#title-folder').html(dataReceived.name);
+      $('#title-folder').html(dataReceived.folder.name);
 
-      var elem = $(`<tr>
-        <td>2</td>
-        <td>FTP</td>
-        <td>parkki@bouye.fr</td>
-        <td>
-          <span class="value"></span>
-          <span class="to-display"><a href="javascript:void(0)" class="click-to-display">Click to display</a></span>
-          <span class="to-copy"> ou <a href="javascript:void(0)" class="click-to-copy" data-toggle=snackbar data-content="Your password has been copied to the clipboard...">click to copy</a></span>
-          <span class="to-hide"> <a href="javascript:void(0)" class="hide-value">Hide the password</a></span>
-        </td>
-        <td></td>
-        <td></td>
-        <td>Thibault Itart-Longueville</td>
-        <td><a href="#"><i class="material-icons">delete</i></a></td>
-      </tr>`);
+      var entries = dataReceived.entries["@items"];
 
-      $('#folders-table').append(elem);
+      for (var i = 0; i < entries.length; i++) {
+        var item = JSON.parse(entries[i]);
+
+        var elem = $(`<tr>
+          <td>`+ item.id +`</td>
+          <td>`+ item.title +`</td>
+          <td>`+ item.username +`</td>
+          <td>
+            <span class="value"></span>
+            <span class="to-display"><a href="javascript:void(0)" class="click-to-display">Click to display</a></span>
+            <span class="to-copy"> ou <a href="javascript:void(0)" class="click-to-copy" data-toggle=snackbar data-content="Your password has been copied to the clipboard...">click to copy</a></span>
+            <span class="to-hide"> <a href="javascript:void(0)" class="hide-value">Hide the password</a></span>
+          </td>
+          <td>`+ item.url +`</td>
+          <td>`+ item.notes +`</td>
+          <td></td>
+          <td><a href="#"><i class="material-icons">delete</i></a></td>
+        </tr>`);
+
+        $('#entries-table').append(elem);
+      }
     }
   })
   .error(function(data) {
-    console.log("err");
-    console.log(data);
-    // sessionStorage.clear();
-    // window.location.replace("signin.html");
+    sessionStorage.clear();
+    window.location.replace("signin.html");
   })
   .complete(function() {
     $('body').show();
@@ -68,75 +71,75 @@ $(document).ready(function() {
 
 
 
-  $('#form-add-new-folder').submit(function() {
-
-    $('#button-add-new-folder').attr("disabled", true);
-
-    var folderName = $('#folderName').val();
-
-    var errors = [];
-
-    if(folderName == undefined || folderName == "") {
-      errors.push("Folder name is invalid");
-    }
-
-    if(errors.length > 0) {
-      $("#errors-list").html("");
-      for (var i = 0; i < errors.length; i++) {
-        $("#errors-list").append($('<li>'+errors[i]+'</li>'));
-      }
-      $("#errors-block").show();
-      $('#button-add-new-folder').attr("disabled", false);
-    }
-    else {
-      var colaborators = "";
-      for (var i = 1; i <= $('.share-value').length; i++) {
-        if($("#shared"+i).val() != "") {
-          colaborators += $("#shared"+i).val() + ",";
-        }
-      }
-      if(colaborators.slice(-1) == ',') {
-        colaborators= colaborators.slice(0, - 1);
-      }
-
-      var data = {
-        'name' : folderName,
-        'colaborators' : colaborators
-      }
-
-      $.ajax({
-        method: "POST",
-        url: serverURL +"/folder",
-        crossDomain: true,
-        xhrFields: {
-          withCredentials: true
-        },
-        data: data,
-        dataType: 'json'
-      })
-      .success(function(dataReceived) {
-
-        console.log(dataReceived);
-        // sessionStorage.setItem("email",data.email);
-        //
-        // window.location.replace("index.html");
-
-      })
-      .error(function(data) {
-        console.log(data);
-        $("#errors-list").html("");
-        $("#errors-list").append($('<li>'+data.responseJSON.error+'</li>'));
-        $("#errors-block").show();
-      })
-      .complete(function() {
-        $('#button-add-new-folder').attr("disabled", false);
-      });
-
-    }
-
-
-    return false;
-  });
+  // $('#form-add-new-folder').submit(function() {
+  //
+  //   $('#button-add-new-folder').attr("disabled", true);
+  //
+  //   var folderName = $('#folderName').val();
+  //
+  //   var errors = [];
+  //
+  //   if(folderName == undefined || folderName == "") {
+  //     errors.push("Folder name is invalid");
+  //   }
+  //
+  //   if(errors.length > 0) {
+  //     $("#errors-list").html("");
+  //     for (var i = 0; i < errors.length; i++) {
+  //       $("#errors-list").append($('<li>'+errors[i]+'</li>'));
+  //     }
+  //     $("#errors-block").show();
+  //     $('#button-add-new-folder').attr("disabled", false);
+  //   }
+  //   else {
+  //     var colaborators = "";
+  //     for (var i = 1; i <= $('.share-value').length; i++) {
+  //       if($("#shared"+i).val() != "") {
+  //         colaborators += $("#shared"+i).val() + ",";
+  //       }
+  //     }
+  //     if(colaborators.slice(-1) == ',') {
+  //       colaborators= colaborators.slice(0, - 1);
+  //     }
+  //
+  //     var data = {
+  //       'name' : folderName,
+  //       'colaborators' : colaborators
+  //     }
+  //
+  //     $.ajax({
+  //       method: "POST",
+  //       url: serverURL +"/folder",
+  //       crossDomain: true,
+  //       xhrFields: {
+  //         withCredentials: true
+  //       },
+  //       data: data,
+  //       dataType: 'json'
+  //     })
+  //     .success(function(dataReceived) {
+  //
+  //       console.log(dataReceived);
+  //       // sessionStorage.setItem("email",data.email);
+  //       //
+  //       // window.location.replace("index.html");
+  //
+  //     })
+  //     .error(function(data) {
+  //       console.log(data);
+  //       $("#errors-list").html("");
+  //       $("#errors-list").append($('<li>'+data.responseJSON.error+'</li>'));
+  //       $("#errors-block").show();
+  //     })
+  //     .complete(function() {
+  //       $('#button-add-new-folder').attr("disabled", false);
+  //     });
+  //
+  //   }
+  //
+  //
+  //   return false;
+  // });
 
 
 

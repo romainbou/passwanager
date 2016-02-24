@@ -65,7 +65,7 @@ $(document).ready(function() {
   })
   .error(function(data) {
     sessionStorage.clear();
-    window.location.replace("sigin.html");
+    window.location.replace("signin.html");
 
   })
   .complete(function() {

@@ -22,10 +22,14 @@ public class UserServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private void setHeaders(HttpServletResponse resp){
+		resp.addHeader("Access-Control-Allow-Origin", "*");
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		setHeaders(resp);
 		UserDao userDao = new UserDao();
 		List users = userDao.getAll();
 		String usersString = JsonWriter.objectToJson(users);

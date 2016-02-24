@@ -24,6 +24,10 @@ public class FolderServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private void setHeaders(HttpServletResponse resp){
+		resp.addHeader("Access-Control-Allow-Origin", "*");
+	}
+	
 	private User loginUser(HttpServletRequest req, HttpServletResponse resp){
 		String sessionId = req.getParameter("session_id");
 		if(sessionId == null || sessionId.isEmpty()){
@@ -50,7 +54,7 @@ public class FolderServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		setHeaders(resp);
 		User currentUser = loginUser(req, resp);
 		if(currentUser == null){
 			return;
@@ -66,7 +70,7 @@ public class FolderServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		setHeaders(resp);
 		User currentUser = loginUser(req, resp);
 		if(currentUser == null){
 			return;

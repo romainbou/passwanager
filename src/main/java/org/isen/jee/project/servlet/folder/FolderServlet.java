@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +15,6 @@ import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.PasswanagerServlet;
 
-import com.cedarsoftware.util.io.JsonObject;
 import com.cedarsoftware.util.io.JsonWriter;
 
 
@@ -27,26 +25,6 @@ public class FolderServlet extends PasswanagerServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private void setHeaders(HttpServletResponse resp){
-		resp.addHeader("Access-Control-Allow-Origin", "http://localhost");
-		resp.addHeader("Content-Type", "application/json");
-		resp.addHeader("Access-Control-Allow-Credentials", "true");
-	}
-	
-	private User loginUser(HttpServletRequest req, HttpServletResponse resp){
-		
-		User currentUser = (User) req.getSession().getAttribute("user");
-		if(currentUser == null){
-    		resp.setStatus(401);
-    		try {
-				resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    		return null;
-		}
-		return currentUser;
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

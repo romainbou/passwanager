@@ -12,19 +12,17 @@ public class PasswanagerServletTest extends JettyHarness {
 
 	/**
      * En implémentant la méthode `doGet()` faire en sorte que la servlet
-     * affiche le score de jeu courant pour la requête suivante :
-     *
-     * GET http://localhost:9090/passwanager
+     * affiche l'application
      *
      * @throws Exception
      */
     @Test
-    public void une_partie_doit_etre_intialisee() throws Exception {
-        assertEquals("Coule", get(getServletUri()));
+    public void getHomepage() throws Exception {
+        assertEquals((int)200, (int)getAndGetStatusCode(getServletUri()));
     }
     
     private String getServletUri() {
-        return getBaseUri() + "/passwanager";
+        return getBaseUri() + "/";
     }
 
 }

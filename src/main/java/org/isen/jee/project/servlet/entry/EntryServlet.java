@@ -17,46 +17,18 @@ import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.model.Value;
+import org.isen.jee.project.servlet.PasswanagerServlet;
 
 import com.cedarsoftware.util.io.JsonObject;
 import com.cedarsoftware.util.io.JsonWriter;
 
 
 @WebServlet("/entry")
-public class EntryServlet extends HttpServlet {
+public class EntryServlet extends PasswanagerServlet {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private void setHeaders(HttpServletResponse resp){
-		resp.addHeader("Access-Control-Allow-Origin", "*");
-		resp.addHeader("Content-Type", "application/json");
-	}
-	
-	private User loginUser(HttpServletRequest req, HttpServletResponse resp){
-		String sessionId = req.getParameter("session_id");
-		if(sessionId == null || sessionId.isEmpty()){
-    		resp.setStatus(401);
-    		try {
-				resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    		return null;
-		}
-		User currentUser = (User) req.getSession().getAttribute("user");
-		if(currentUser == null){
-    		resp.setStatus(401);
-    		try {
-				resp.getWriter().print("{ \"error\": \"Unauthorized\" }");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    		return null;
-		}
-		return currentUser;
-	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -103,10 +103,23 @@ public class JettyHarness {
         httpClient.getConnectionManager()
                 .closeIdleConnections(0, TimeUnit.SECONDS);
     }
-
+    
     public String get(String uri) throws IOException, HttpException {
-        HttpGet get = new HttpGet(uri);
-        return executeAndReturnResult(get);
+    	HttpGet get = new HttpGet(uri);
+    	return executeAndReturnResult(get);
+    }
+
+    public int getAndGetStatusCode(String uri) throws IOException, HttpException {
+    	HttpGet get = new HttpGet(uri);
+		try{
+        	HttpResponse response = httpClient.execute(get);
+        	int responseCode = response.getStatusLine().getStatusCode();
+        	return responseCode;
+	    } catch (IOException e) {
+	        throw new WebRuntimeException(500, e.getMessage());
+	    } finally {
+	        get.releaseConnection();
+	    }
     }
 
     public String getWithParams(String uri, Map<String, String> params) {

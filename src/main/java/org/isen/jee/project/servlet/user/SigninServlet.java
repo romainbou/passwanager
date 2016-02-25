@@ -22,12 +22,6 @@ import com.cedarsoftware.util.io.JsonWriter;
 public class SigninServlet extends PasswanagerServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private void setHeaders(HttpServletResponse resp){
-		resp.addHeader("Access-Control-Allow-Origin", "http://localhost");
-		resp.addHeader("Content-Type", "application/json");
-		resp.addHeader("Access-Control-Allow-Credentials", "true");
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -13,20 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.persistence.sessions.serializers.JSONSerializer;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.model.User;
+import org.isen.jee.project.servlet.PasswanagerServlet;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
 
 @WebServlet("/user/signup")
-public class SignupServlet extends HttpServlet {
+public class SignupServlet extends PasswanagerServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private void setHeaders(HttpServletResponse resp){
-		resp.addHeader("Access-Control-Allow-Origin", "*");
-		resp.addHeader("Content-Type", "application/json");
-	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		setHeaders(resp);

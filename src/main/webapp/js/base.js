@@ -154,8 +154,6 @@ $(document).ready(function() {
         dataType: 'json'
       })
       .success(function(dataReceived) {
-
-        sessionStorage.setItem("session_id",dataReceived.session_id);
         sessionStorage.setItem("email",data.email);
 
         $('#login-box').hide();
@@ -225,8 +223,6 @@ $(document).ready(function() {
         dataType: 'json'
       })
       .success(function(dataReceived) {
-
-        sessionStorage.setItem("session_id",dataReceived.session_id);
         sessionStorage.setItem("email",data.email);
 
         window.location.replace("index.html");

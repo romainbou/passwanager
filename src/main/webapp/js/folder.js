@@ -23,6 +23,7 @@ $(document).ready(function() {
     dataType: 'json'
   })
   .success(function(dataReceived) {
+    console.log('success');
     console.log(dataReceived);
 
     if(dataReceived) {
@@ -54,8 +55,10 @@ $(document).ready(function() {
     }
   })
   .error(function(data) {
-    sessionStorage.clear();
-    window.location.replace("signin.html");
+    console.log("err");
+    console.log(data);
+    // sessionStorage.clear();
+    // window.location.replace("signin.html");
   })
   .complete(function() {
     $('body').show();
@@ -97,7 +100,6 @@ $(document).ready(function() {
       }
 
       var data = {
-        'session_id': sessionStorage.getItem("session_id"),
         'name' : folderName,
         'colaborators' : colaborators
       }
@@ -115,8 +117,6 @@ $(document).ready(function() {
       .success(function(dataReceived) {
 
         console.log(dataReceived);
-
-        // sessionStorage.setItem("session_id",dataReceived.session_id);
         // sessionStorage.setItem("email",data.email);
         //
         // window.location.replace("index.html");

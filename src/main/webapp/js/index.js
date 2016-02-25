@@ -39,9 +39,18 @@ $(document).ready(function() {
         }
 
         var confidential = "Private";
-        if(item.users.length > 1) {
-          confidential = "Shared with: "
-          //@TODO
+        if(item.users["@items"].length > 1) {
+          confidential = "Shared with: ";
+          for (var i = 0; i < item.users["@items"].length; i++) {
+            if(item.users["@items"][i].firstname != undefined && item.users["@items"][i].lastname != undefined && item.users["@items"][i].firstname != "" && item.users["@items"][i].lastname != "") {
+              confidential += " " + item.users["@items"][i].firstname + " " + item.users["@items"][i].lastname + ",";
+            }
+          }
+
+          if(confidential.slice(-1) == ',') {
+            confidential= confidential.slice(0, - 1);
+          }
+
         }
 
 
@@ -108,7 +117,6 @@ $(document).ready(function() {
       }
 
       var data = {
-        'session_id': sessionStorage.getItem("session_id"),
         'name' : folderName,
         'colaborators' : colaborators
       }
@@ -126,11 +134,19 @@ $(document).ready(function() {
       .success(function(dataReceived) {
 
         console.log(dataReceived);
+        $('#folderName').val("");
+        $("#errors-block").hide();
+        $("#share-with-list").html(`<h4>Share with...</h4>
+        <label class="control-label" for="addon1">Email address or username used on Passwanager</label>
+        <div class="input-group">
+          <input type="text" id="shared1" class="form-control share-value">
+          <span class="input-group-btn">
+              <a href="javascript:void(0)" class="btn btn-primary btn-fab btn-fab-mini" id="add-share-button"><i class="material-icons">add</i></a>
+          </span>
+        </div>`);
+        $(".modal").hide();
 
-        // sessionStorage.setItem("session_id",dataReceived.session_id);
-        // sessionStorage.setItem("email",data.email);
-        //
-        // window.location.replace("index.html");
+        window.location.replace("index.html");
 
       })
       .error(function(data) {

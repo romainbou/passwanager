@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
+import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.PasswanagerServlet;
+import org.json.JSONObject;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
@@ -48,6 +50,7 @@ public class FolderServlet extends PasswanagerServlet {
 		if(folderId != null && !folderId.isEmpty()){
 			boolean found = false;
 			String jsonFolder = null;
+			JSONObject jobj = new JSONObject();
 			for (Folder folder : folders) {
 				if(folderId.equals(Integer.toString(folder.getId()))){
 					// @TODO add all users public keys
@@ -56,14 +59,19 @@ public class FolderServlet extends PasswanagerServlet {
 						Entry entry = (Entry) iterator.next();
 						entries.add(JsonWriter.objectToJson(entry));
 					}
-					String folderEntries = JsonWriter.objectToJson(entries);
 					jsonFolder = JsonWriter.objectToJson(folder);
-					jsonFolder = "{ \"folder\":"+ jsonFolder +", \"entries\":" + folderEntries + " }";
+					if(entries.size() > 0){
+						String folderEntries = JsonWriter.objectToJson(entries);
+						jobj.append("folder", jsonFolder);
+						jobj.append("entries", folderEntries);
+					} else {
+						jobj.append("folder", jsonFolder);
+					}
 					found = true;
 				}
 			}
 			if(found){
-				resp.getWriter().print(jsonFolder);
+				resp.getWriter().print(jobj.toString());
 				return;
 			}
 		}

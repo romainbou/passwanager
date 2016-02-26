@@ -203,6 +203,11 @@
 		<artifactId>jbcrypt</artifactId>
 		<version>0.3m</version>
 	</dependency>
+	<dependency>
+		<groupId>org.json</groupId>
+		<artifactId>json</artifactId>
+		<version>20160212</version>
+	</dependency>
 	
 
     

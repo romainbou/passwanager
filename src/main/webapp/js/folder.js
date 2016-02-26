@@ -27,14 +27,15 @@ $(document).ready(function() {
 
     if(dataReceived) {
 
-      var owner = dataReceived.folder.owner.firstname + " " + dataReceived.folder.owner.lastname;
-      if(dataReceived.folder.owner.email == sessionStorage.getItem("email")) {
+      var folder = JSON.parse(dataReceived.folder[0]);
+      var entries = JSON.parse(dataReceived.entries[0])["@items"];
+
+      var owner = folder.owner.firstname + " " + folder.owner.lastname;
+      if(folder.owner.email == sessionStorage.getItem("email")) {
         owner = "You";
       }
 
-      $('#title-folder').html(dataReceived.folder.name);
-
-      var entries = dataReceived.entries["@items"];
+      $('#title-folder').html(folder.name);
 
       for (var i = 0; i < entries.length; i++) {
         var item = JSON.parse(entries[i]);

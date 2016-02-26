@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.json.Json;
 
+import org.json.JSONObject;
+import org.eclipse.persistence.internal.oxm.record.json.JSONReader;
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.harness.JettyHarness;
@@ -26,6 +29,12 @@ public class FolderServletTest extends JettyHarness {
 
 	public String getServletUri() {
 		return getBaseUri() + "/folder";
+	}
+	
+	public String slice_range(String s, int startIndex, int endIndex) {
+	    if (startIndex < 0) startIndex = s.length() + startIndex;
+	    if (endIndex < 0) endIndex = s.length() + endIndex;
+	    return s.substring(startIndex, endIndex);
 	}
 	
 	private String setupUserSession(String email) {
@@ -78,9 +87,11 @@ public class FolderServletTest extends JettyHarness {
 		User owner = userDao.findByEmail("bar@foo.com");
 		Folder newFolder = folderDao.createNewFolder("top_secret", owner);
 		params.put("id", Integer.toString(newFolder.getId()));
-		
-        String folderJson = getWithParams(getServletUri(), params);
-        Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
+		JSONObject jobj = new JSONObject(getWithParams(getServletUri(), params));
+		String jsonFolder = jobj.get("folder").toString();
+		jsonFolder = jsonFolder.replaceAll(Pattern.quote("\\"), "");
+		jsonFolder = slice_range(jsonFolder, 2, jsonFolder.length() - 2);
+		Folder folder = (Folder) JsonReader.jsonToJava(jsonFolder);
         assertEquals(newFolder.getId(), folder.getId());  
 	}
 	
@@ -105,8 +116,7 @@ public class FolderServletTest extends JettyHarness {
 		params.put("session_id", sessionId);
 		params.put("name", "super_secret");
 		params.put("colaborators", "bar@foo.com, foo@bar.com");
-		String folderJson = post(getServletUri(), params);
-		Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
+		Folder folder = (Folder) JsonReader.jsonToJava(post(getServletUri(), params));
 		assertEquals("super_secret", folder.getName());
 	}
 	
@@ -121,7 +131,6 @@ public class FolderServletTest extends JettyHarness {
         params.put("colaborators", "bar@foo.com, foo@bar.com");
         String folderJson = post(getServletUri(), params);
         Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
-        System.out.println(folderJson);
         assertEquals(2, folder.getUsers().size());
         assertEquals("super_secret2", folder.getName());
         assertEquals("bar@foo.com", folder.getUsers().get(0).getEmail());

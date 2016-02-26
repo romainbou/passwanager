@@ -236,7 +236,7 @@ public class JettyHarness {
             int responseCode = response.getStatusLine()
                     .getStatusCode();
             if (responseCode >= 500) {
-                throw new WebRuntimeException(responseCode, "Bad request");
+                throw new WebRuntimeException(responseCode, "Bad request code " + responseCode);
             }
             InputStream content = response.getEntity()
                     .getContent();

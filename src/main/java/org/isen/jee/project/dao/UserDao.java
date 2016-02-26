@@ -20,8 +20,6 @@ public class UserDao {
     	try {
     		em.getTransaction().begin();
         	em.persist(user);
-//        	em.flush(); // not to id 0
-//        	em.refresh(user);
     		em.getTransaction().commit();
     		
     	} catch (SecurityException | IllegalStateException e) {
@@ -39,11 +37,8 @@ public class UserDao {
         	user.setUsername(username);
         	user.setPassword(password);
         	user.setPublicKey(publicKey);
-        	System.out.println("user id: " + user.getId());
         	em.getTransaction().begin();
         	em.persist(user);
-//        	em.flush(); // not to id 0
-//        	em.refresh(user);
         	em.getTransaction().commit();
 
         } catch (SecurityException | IllegalStateException e) {

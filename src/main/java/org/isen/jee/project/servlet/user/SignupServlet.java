@@ -14,6 +14,7 @@ import org.eclipse.persistence.sessions.serializers.JSONSerializer;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.PasswanagerServlet;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
@@ -52,7 +53,8 @@ public class SignupServlet extends PasswanagerServlet {
     		resp.getWriter().print("{ \"error\": \"Unsername already taken\" }");
     		return;
     	}
-    	User newUser = userDao.createNewUser(email, firstname, lastname, username, password, public_key);
+    	String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+    	User newUser = userDao.createNewUser(email, firstname, lastname, username, hashedPassword, public_key);
     	if(newUser != null){
     		req.getSession().setAttribute("user", newUser);
     		String sessionId = req.getSession().getId();

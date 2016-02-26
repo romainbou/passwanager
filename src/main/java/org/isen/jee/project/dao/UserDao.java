@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class UserDao {  
@@ -80,10 +81,13 @@ public class UserDao {
     
     public User signin(String email, String password){
     	try{
-    		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
-    			.setParameter("email", email)
-    			.setParameter("password", password).getSingleResult();
-    		return foundUser;
+    		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")
+    			.setParameter("email", email).getSingleResult();
+    		if(BCrypt.checkpw(password, foundUser.getPassword())){
+    			return foundUser;
+    		} else {
+    			return null;
+    		}
     	} catch (SecurityException | IllegalStateException | NoResultException e) {
             return null;
         }

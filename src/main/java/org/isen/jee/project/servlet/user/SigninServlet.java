@@ -14,6 +14,7 @@ import org.eclipse.persistence.sessions.serializers.JSONSerializer;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.PasswanagerServlet;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
@@ -34,6 +35,7 @@ public class SigninServlet extends PasswanagerServlet {
     		return;
     	}
     	UserDao userDao = new UserDao();
+    	System.out.println(password);
     	User foundUser = userDao.signin(email, password);
     	if(foundUser != null){
     		req.getSession().setAttribute("user", foundUser);

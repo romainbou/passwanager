@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
+import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.PasswanagerServlet;
@@ -51,13 +52,21 @@ public class FolderServlet extends PasswanagerServlet {
 			for (Folder folder : folders) {
 				if(folderId.equals(Integer.toString(folder.getId()))){
 					// @TODO add all users public keys
+					ArrayList<String> entries = new ArrayList();
+					for (Iterator iterator = folder.getEntries().iterator(); iterator.hasNext();) {
+						Entry entry = (Entry) iterator.next();
+						entries.add(JsonWriter.objectToJson(entry));
+					}
+					String folderEntries = JsonWriter.objectToJson(entries);
 					jsonFolder = JsonWriter.objectToJson(folder);
+					jsonFolder = "{ \"folder:\":"+ jsonFolder +
+							     ", \"entries\":" + folderEntries + " }";
+					
 					found = true;
 				}
 			}
 			if(found){
 				resp.getWriter().print(jsonFolder);
-				System.err.println(jsonFolder);
 				return;
 			}
 		}

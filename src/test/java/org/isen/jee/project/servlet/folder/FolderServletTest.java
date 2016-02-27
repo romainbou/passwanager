@@ -4,10 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.json.Json;
-import org.json.JSONObject;
 
+import org.json.JSONObject;
 import org.eclipse.persistence.internal.oxm.record.json.JSONReader;
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
@@ -88,7 +89,7 @@ public class FolderServletTest extends JettyHarness {
 		params.put("id", Integer.toString(newFolder.getId()));
 		JSONObject jobj = new JSONObject(getWithParams(getServletUri(), params));
 		String jsonFolder = jobj.get("folder").toString();
-		jsonFolder = jsonFolder.replace('\\', ' ');
+		jsonFolder = jsonFolder.replaceAll(Pattern.quote("\\"), "");
 		jsonFolder = slice_range(jsonFolder, 2, jsonFolder.length() - 2);
 		Folder folder = (Folder) JsonReader.jsonToJava(jsonFolder);
         assertEquals(newFolder.getId(), folder.getId());  

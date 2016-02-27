@@ -146,7 +146,41 @@ $(document).ready(function() {
         </div>`);
         $(".modal").hide();
 
-        window.location.replace("index.html");
+        var owner = dataReceived.owner.firstname + " " + dataReceived.owner.lastname;
+        if(dataReceived.owner.email == sessionStorage.getItem("email")) {
+          owner = "You";
+        }
+
+        var confidential = "Private";
+        if(dataReceived.users["@items"].length > 1) {
+          confidential = "Shared with: ";
+          for (var i = 0; i < dataReceived.users["@items"].length; i++) {
+            if(dataReceived.users["@items"][i].firstname != undefined && dataReceived.users["@items"][i].lastname != undefined && dataReceived.users["@items"][i].firstname != "" && dataReceived.users["@items"][i].lastname != "") {
+              confidential += " " + dataReceived.users["@items"][i].firstname + " " + dataReceived.users["@items"][i].lastname + ",";
+            }
+          }
+
+          if(confidential.slice(-1) == ',') {
+            confidential= confidential.slice(0, - 1);
+          }
+
+        }
+
+
+        var elem = $(`<div class="list-group-item">
+        <div class="row-action-primary">
+            <i class="material-icons">folder</i>
+          </div>
+          <div class="row-content">
+            <div class="least-content" style="text-align:right">` + timeConverter(dataReceived.createdAt) + `<br><a href="#"><i class="material-icons">delete</i></a> </div>
+            <h4 class="list-group-item-heading"><a href="folder.html?id=`+dataReceived.id+`">`+dataReceived.name+`</a></h4>
+
+            <p class="list-group-item-text">Owner: `+ owner +` - `+ confidential +`</p>
+          </div>
+        </div>
+        <div class="list-group-separator"></div>`);
+
+        $('#folders-table').append(elem);
 
       })
       .error(function(data) {

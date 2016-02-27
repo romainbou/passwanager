@@ -28,35 +28,38 @@ $(document).ready(function() {
     if(dataReceived) {
 
       var folder = JSON.parse(dataReceived.folder[0]);
-      var entries = JSON.parse(dataReceived.entries[0])["@items"];
 
-      var owner = folder.owner.firstname + " " + folder.owner.lastname;
-      if(folder.owner.email == sessionStorage.getItem("email")) {
-        owner = "You";
-      }
+      if(dataReceived.entries) {
+        var entries = JSON.parse(dataReceived.entries[0])["@items"];
 
-      $('#title-folder').html(folder.name);
+        var owner = folder.owner.firstname + " " + folder.owner.lastname;
+        if(folder.owner.email == sessionStorage.getItem("email")) {
+          owner = "You";
+        }
 
-      for (var i = 0; i < entries.length; i++) {
-        var item = JSON.parse(entries[i]);
+        $('#title-folder').html(folder.name);
 
-        var elem = $(`<tr>
-          <td>`+ item.id +`</td>
-          <td>`+ item.title +`</td>
-          <td>`+ item.username +`</td>
-          <td>
-            <span class="value"></span>
-            <span class="to-display"><a href="javascript:void(0)" class="click-to-display">Click to display</a></span>
-            <span class="to-copy"> ou <a href="javascript:void(0)" class="click-to-copy" data-toggle=snackbar data-content="Your password has been copied to the clipboard...">click to copy</a></span>
-            <span class="to-hide"> <a href="javascript:void(0)" class="hide-value">Hide the password</a></span>
-          </td>
-          <td>`+ item.url +`</td>
-          <td>`+ item.notes +`</td>
-          <td></td>
-          <td><a href="#"><i class="material-icons">delete</i></a></td>
-        </tr>`);
+        for (var i = 0; i < entries.length; i++) {
+          var item = JSON.parse(entries[i]);
 
-        $('#entries-table').append(elem);
+          var elem = $(`<tr>
+            <td>`+ item.id +`</td>
+            <td>`+ item.title +`</td>
+            <td>`+ item.username +`</td>
+            <td>
+              <span class="value"></span>
+              <span class="to-display"><a href="javascript:void(0)" class="click-to-display">Click to display</a></span>
+              <span class="to-copy"> ou <a href="javascript:void(0)" class="click-to-copy" data-toggle=snackbar data-content="Your password has been copied to the clipboard...">click to copy</a></span>
+              <span class="to-hide"> <a href="javascript:void(0)" class="hide-value">Hide the password</a></span>
+            </td>
+            <td>`+ item.url +`</td>
+            <td>`+ item.notes +`</td>
+            <td></td>
+            <td><a href="#"><i class="material-icons">delete</i></a></td>
+          </tr>`);
+
+          $('#entries-table').append(elem);
+        }
       }
     }
   })

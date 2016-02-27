@@ -43,6 +43,7 @@ public class FolderServletTest extends JettyHarness {
         String session_id = Iterables.get(session.values(), 0).toString();
         return session_id;
 	}
+
  
 	@Test
 	public void tryToGetWithoutSession() throws Exception {
@@ -50,7 +51,7 @@ public class FolderServletTest extends JettyHarness {
 	}
 	
 	@Test
-	public void tryToGetExistingFolder() throws Exception {
+	public void tryToGetExistingFolders() throws Exception {
 		
 		String sessionId = setupUserSession();
 		Map<String, String> params = new HashMap<>();
@@ -64,9 +65,27 @@ public class FolderServletTest extends JettyHarness {
 		assertEquals(200, getWithParamsAndGetStatusCode(getServletUri(), params));  
 	}
 	
+	@Test
+	public void tryToGetExistingFolderFromId() throws Exception {
+		
+		String sessionId = setupUserSession();
+		Map<String, String> params = new HashMap<>();
+		params.put("session_id", sessionId);
+		
+		FolderDao folderDao = new FolderDao();
+		UserDao userDao = new UserDao();
+		User owner = userDao.findByEmail("bar@foo.com");
+		Folder newFolder = folderDao.createNewFolder("top_secret", owner);
+		params.put("id", Integer.toString(newFolder.getId()));
+		
+        String folderJson = getWithParams(getServletUri(), params);
+        Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
+        assertEquals(newFolder.getId(), folder.getId());  
+	}
+	
 	
 	@Test
-	public void createAdNewFolder() throws Exception {
+	public void createANewFolder() throws Exception {
 		
 		String sessionId = setupUserSession();
 		Map<String, String> params = new HashMap<>();
@@ -78,7 +97,7 @@ public class FolderServletTest extends JettyHarness {
 	}
 	
 	@Test
-	public void createAdNewFolderAndReturnIt() throws Exception {
+	public void createANewFolderAndReturnIt() throws Exception {
 		
 		String sessionId = setupUserSession();
     	Map<String, String> params = new HashMap<>();

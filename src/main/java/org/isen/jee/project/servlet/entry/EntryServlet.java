@@ -42,11 +42,13 @@ public class EntryServlet extends PasswanagerServlet {
 		}
 		
 		String title = req.getParameter("title");
+		System.out.println(title);
 		String url = req.getParameter("url");
 		String notes = req.getParameter("notes");
 		String folderId = req.getParameter("folder");
     	String valuesString = req.getParameter("values");
     	String[] valuesStringArray = valuesString.split(",", -1);
+    	
     	
     	List<Value> values = new ArrayList<>();
     	for (String value : valuesStringArray) {

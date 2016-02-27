@@ -128,6 +128,29 @@ public class JettyHarness {
         }
         return executeAndReturnResult(post);
     }
+    
+    public int postAndGetStatusCode(String uri, Map<String, String> params){
+        HttpPost post = new HttpPost(uri);
+
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        for (Entry<String, String> paramEntry : params.entrySet()) {
+            nameValuePairs.add(new BasicNameValuePair(paramEntry.getKey(), paramEntry.getValue()));
+        }
+        try {
+            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        try{
+        	HttpResponse response = httpClient.execute(post);
+        	int responseCode = response.getStatusLine().getStatusCode();
+        	return responseCode;
+	    } catch (IOException e) {
+	        throw new WebRuntimeException(500, e.getMessage());
+	    } finally {
+	        post.releaseConnection();
+	    }
+    }
 
 
     public String put(String uri, Map<String, String> params) {
@@ -152,7 +175,7 @@ public class JettyHarness {
             HttpResponse response = httpClient.execute(method);
             int responseCode = response.getStatusLine()
                     .getStatusCode();
-            if (responseCode >= 400) {
+            if (responseCode >= 500) {
                 throw new WebRuntimeException(responseCode, "Bad request");
             }
             InputStream content = response.getEntity()

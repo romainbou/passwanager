@@ -15,6 +15,7 @@ import org.isen.jee.project.model.User;
 import org.isen.jee.project.servlet.user.SigninServlet;
 import org.isen.jee.project.servlet.user.SigninServletTest;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.cedarsoftware.util.io.JsonObject;
 import com.cedarsoftware.util.io.JsonReader;
@@ -29,8 +30,9 @@ public class FolderServletTest extends JettyHarness {
 	
 	private String setupUserSession(String email) {
 		UserDao userDao = new UserDao();
+    	String hashedPassword = BCrypt.hashpw("hackMe", BCrypt.gensalt());
     	if(userDao.findByEmail(email) == null){
-    		userDao.createNewUser(email, "john", "doe", "john_tester", "hackMe", "securePK");
+    		userDao.createNewUser(email, "john", "doe", "john_tester", hashedPassword, "securePK");
     	}
     	Map<String, String> params = new HashMap<>();
         params.put("email", email);

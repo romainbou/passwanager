@@ -10,6 +10,7 @@ import org.eclipse.persistence.oxm.JSONWithPadding;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.harness.JettyHarness;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class SigninServletTest extends JettyHarness {
 
@@ -41,8 +42,9 @@ public class SigninServletTest extends JettyHarness {
     public void singinValidUser() throws Exception {
     	UserDao userDao = new UserDao();
     	String email = "bar@foo.com";
+    	String hashedPassword = BCrypt.hashpw("hackMe", BCrypt.gensalt());
     	if(userDao.findByEmail(email) == null){
-    		userDao.createNewUser(email, "john", "doe", "john_tester", "hackMe", "securePK");
+    		userDao.createNewUser(email, "john", "doe", "john_tester", hashedPassword, "securePK");
     	}
     	Map<String, String> params = new HashMap<>();
         params.put("email", email);

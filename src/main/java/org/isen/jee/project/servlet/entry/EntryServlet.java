@@ -2,6 +2,7 @@ package org.isen.jee.project.servlet.entry;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,8 +42,7 @@ public class EntryServlet extends PasswanagerServlet {
 			return;
 		}
 		
-		String title = req.getParameter("title");
-		System.out.println(title);
+		String title = req.getParameter("title");		
 		String url = req.getParameter("url");
 		String notes = req.getParameter("notes");
 		String folderId = req.getParameter("folder");

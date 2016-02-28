@@ -4,14 +4,17 @@
   <artifactId>passwanager</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>passwanager</name>
-  
-  <properties>
-    <java.version>1.8</java.version>
-    <jee.version>7.0</jee.version>
-  </properties>
+  <packaging>war</packaging>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+	   	<jee.version>7.0</jee.version>
+		<jetty.version>9.3.7.v20160115</jetty.version>
+	</properties>
   
     <build>
-    <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -22,8 +25,31 @@
             <target>${java.version}</target>
           </configuration>
        </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-resources-plugin</artifactId>
+			<version>2.4</version>
+			<configuration>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+		<plugin>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>2.1.1</version>
+			<configuration>
+				<failOnMissingWebXml>false</failOnMissingWebXml>
+			</configuration>
+		</plugin>
+		<!-- Plugin to run and test through maven -->
+		<plugin>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>${jetty.version}</version>
+			<configuration>
+				<scanIntervalSeconds>3</scanIntervalSeconds>
+			</configuration>
+		</plugin>
      </plugins>
-    </pluginManagement>
    </build>
   
    <dependencies>
@@ -133,6 +159,30 @@
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
 		<version>5.1.6</version>
+	</dependency>
+	
+	
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-webapp</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.mortbay.jetty</groupId>
+		<artifactId>jsp-2.1-glassfish</artifactId>
+		<version>2.1.v20100127</version>
+	</dependency>
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-server</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-servlet</artifactId>
+		<version>${jetty.version}</version>
 	</dependency>
 	
 

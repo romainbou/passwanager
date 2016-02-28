@@ -50,6 +50,12 @@ public class SignupServlet extends HttpServlet {
     		resp.getWriter().print("{ \"error\": \"Email already taken\" }");
     		return;
     	}
+    	foundUser = userDao.findByUsername(username);
+    	if(foundUser != null){
+    		resp.setStatus(422);
+    		resp.getWriter().print("{ \"error\": \"Unsername already taken\" }");
+    		return;
+    	}
     	User newUser = userDao.createNewUser(email, firstname, lastname, username, password, public_key);
     	if(newUser != null){
     		req.getSession().setAttribute("user", newUser);

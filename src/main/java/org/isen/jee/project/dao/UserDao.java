@@ -58,6 +58,16 @@ public class UserDao {
     	}
     }
     
+    public User findByUsername(String username){
+    	try{
+    		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.username = :username")
+    				.setParameter("username", username).getSingleResult();
+    		return foundUser;
+    	} catch (SecurityException | IllegalStateException | NoResultException e) {
+    		return null;
+    	}
+    }
+    
     public User findByEmail(String email){
     	try{
     		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")

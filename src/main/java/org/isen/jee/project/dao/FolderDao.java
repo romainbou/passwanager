@@ -104,7 +104,7 @@ public class FolderDao {
     	boolean done = false;
     	try{
     		em.getTransaction().begin();
-    		Folder foundFolder = (Folder) em.createQuery("SELECT t FROM Folder r WHERE r.email = :id")
+    		Folder foundFolder = (Folder) em.createQuery("SELECT f FROM Folder f WHERE f.id = :id")
     			.setParameter("id", id).getSingleResult();
     		if(foundFolder != null){
     			em.remove(foundFolder);

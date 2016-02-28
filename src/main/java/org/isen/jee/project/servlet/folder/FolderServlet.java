@@ -66,6 +66,26 @@ public class FolderServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 		currentUser = userDao.findById(currentUser.getId());
 		List<Folder> folders = currentUser.getFolders();
+		
+		
+		String folderId = req.getParameter("id");
+		if(folderId != null && !folderId.isEmpty()){
+			boolean found = false;
+			String jsonFolder = null;
+			for (Folder folder : folders) {
+				if(folderId.equals(Integer.toString(folder.getId()))){
+					jsonFolder = JsonWriter.objectToJson(folder);
+					found = true;
+				}
+			}
+			if(found){
+				resp.getWriter().print(jsonFolder);
+				System.err.println(jsonFolder);
+				return;
+			}
+		}
+		
+		
 		String usersString = JsonWriter.objectToJson(folders.toArray());
 		resp.getWriter().print(usersString);
 		

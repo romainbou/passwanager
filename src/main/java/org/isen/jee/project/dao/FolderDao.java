@@ -21,6 +21,8 @@ public class FolderDao {
     	try {
     		em.getTransaction().begin();
         	em.persist(folder);
+            em.flush();
+            em.refresh(folder); // To get the id
     		em.getTransaction().commit();
     		
     	} catch (SecurityException | IllegalStateException e) {
@@ -47,6 +49,8 @@ public class FolderDao {
     		
     		em.getTransaction().begin();
     		em.persist(folder);
+            em.flush();
+            em.refresh(folder); // To get the id
     		em.merge(owner);
     		em.getTransaction().commit();
     		
@@ -75,6 +79,8 @@ public class FolderDao {
         	
         	em.getTransaction().begin();
         	em.persist(folder);
+            em.flush();
+            em.refresh(folder); // To get the id
         	em.merge(owner);
         	em.getTransaction().commit();
 

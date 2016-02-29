@@ -75,75 +75,89 @@ $(document).ready(function() {
 
 
 
-  // $('#form-add-new-folder').submit(function() {
-  //
-  //   $('#button-add-new-folder').attr("disabled", true);
-  //
-  //   var folderName = $('#folderName').val();
-  //
-  //   var errors = [];
-  //
-  //   if(folderName == undefined || folderName == "") {
-  //     errors.push("Folder name is invalid");
-  //   }
-  //
-  //   if(errors.length > 0) {
-  //     $("#errors-list").html("");
-  //     for (var i = 0; i < errors.length; i++) {
-  //       $("#errors-list").append($('<li>'+errors[i]+'</li>'));
-  //     }
-  //     $("#errors-block").show();
-  //     $('#button-add-new-folder').attr("disabled", false);
-  //   }
-  //   else {
-  //     var colaborators = "";
-  //     for (var i = 1; i <= $('.share-value').length; i++) {
-  //       if($("#shared"+i).val() != "") {
-  //         colaborators += $("#shared"+i).val() + ",";
-  //       }
-  //     }
-  //     if(colaborators.slice(-1) == ',') {
-  //       colaborators= colaborators.slice(0, - 1);
-  //     }
-  //
-  //     var data = {
-  //       'name' : folderName,
-  //       'colaborators' : colaborators
-  //     }
-  //
-  //     $.ajax({
-  //       method: "POST",
-  //       url: serverURL +"/folder",
-  //       crossDomain: true,
-  //       xhrFields: {
-  //         withCredentials: true
-  //       },
-  //       data: data,
-  //       dataType: 'json'
-  //     })
-  //     .success(function(dataReceived) {
-  //
-  //       console.log(dataReceived);
-  //       // sessionStorage.setItem("email",data.email);
-  //       //
-  //       // window.location.replace("index.html");
-  //
-  //     })
-  //     .error(function(data) {
-  //       console.log(data);
-  //       $("#errors-list").html("");
-  //       $("#errors-list").append($('<li>'+data.responseJSON.error+'</li>'));
-  //       $("#errors-block").show();
-  //     })
-  //     .complete(function() {
-  //       $('#button-add-new-folder').attr("disabled", false);
-  //     });
-  //
-  //   }
-  //
-  //
-  //   return false;
-  // });
+  $('#form-add-new-entry').submit(function() {
+    console.log("eee");
+
+    $('#button-add-new-entry').attr("disabled", true);
+
+    var title = $('#title').val();
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var verifyPassword = $('#verifypassword').val();
+    var url = $('#url').val();
+    var notes = $('#notes').val();
+
+    var errors = [];
+
+    if(title == undefined || title == "") {
+      errors.push("Title is invalid");
+    }
+
+    if(username == undefined || username == "") {
+      errors.push("Username is invalid");
+    }
+
+    if(password == undefined || password == "") {
+      errors.push("Password is invalid");
+    }
+
+    if(verifyPassword == undefined || verifyPassword == "") {
+      errors.push("Verify password is invalid");
+    }
+
+    if(password != verifyPassword) {
+      errors.push("Password and verify password are different");
+    }
+
+    if(errors.length > 0) {
+      $("#errors-list").html("");
+      for (var i = 0; i < errors.length; i++) {
+        $("#errors-list").append($('<li>'+errors[i]+'</li>'));
+      }
+      $("#errors-block").show();
+      $('#button-add-new-entry').attr("disabled", false);
+    }
+    else {
+
+      var data = {
+        'folder' : id_params,
+        'title' : title,
+        'username' : username,
+        'url' : url,
+        'notes' : notes,
+        'values' : password
+      }
+
+      $.ajax({
+        method: "POST",
+        url: serverURL +"/entry",
+        crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
+        data: data,
+        dataType: 'json'
+      })
+      .success(function(dataReceived) {
+
+        console.log(dataReceived);
+
+      })
+      .error(function(data) {
+        console.log(data);
+        $("#errors-list").html("");
+        $("#errors-list").append($('<li>'+data.responseJSON.error+'</li>'));
+        $("#errors-block").show();
+      })
+      .complete(function() {
+        $('#button-add-new-entry').attr("disabled", false);
+      });
+
+    }
+
+
+    return false;
+  });
 
 
 

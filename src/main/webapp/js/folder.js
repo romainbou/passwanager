@@ -141,6 +141,27 @@ $(document).ready(function() {
       .success(function(dataReceived) {
 
         console.log(dataReceived);
+        if(dataReceived) {
+          var item = dataReceived;
+
+          var elem = $(`<tr>
+            <td>`+ item.id +`</td>
+            <td>`+ item.title +`</td>
+            <td>`+ item.username +`</td>
+            <td>
+              <span class="value"></span>
+              <span class="to-display"><a href="javascript:void(0)" class="click-to-display">Click to display</a></span>
+              <span class="to-copy"> ou <a href="javascript:void(0)" class="click-to-copy" data-toggle=snackbar data-content="Your password has been copied to the clipboard...">click to copy</a></span>
+              <span class="to-hide"> <a href="javascript:void(0)" class="hide-value">Hide the password</a></span>
+            </td>
+            <td>`+ item.url +`</td>
+            <td>`+ item.notes +`</td>
+            <td></td>
+            <td><a href="#"><i class="material-icons">delete</i></a></td>
+          </tr>`);
+
+          $('#entries-table').append(elem);
+        }
 
       })
       .error(function(data) {

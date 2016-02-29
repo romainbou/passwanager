@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.harness.JettyHarness;
 import org.isen.jee.project.model.Folder;
@@ -65,6 +66,28 @@ public class EntryServletTest extends JettyHarness {
 		params.put("values", "xy, yz");
 		
 		assertEquals(200, postAndGetStatusCode(getServletUri(), params));  
+	}
+	
+	@Test
+	public void createANewEntryAndRefreshFolder() throws Exception {
+		
+		String sessionId = setupUserSession("bar@foo.com");
+		Map<String, String> params = new HashMap<>();
+		Integer folderId = createFolder();
+		params.put("session_id", sessionId);
+		params.put("folder", folderId.toString());
+		params.put("title", "Cool password");
+		params.put("url", "http://example.com");
+		params.put("username", "jenny");
+		params.put("values", "xy, yz");
+		
+		FolderDao folderDao = new FolderDao();
+		Folder folder = folderDao.findById(folderId);
+		
+		assertEquals(0, folder.getEntries().size());
+		assertEquals(200, postAndGetStatusCode(getServletUri(), params));  
+		Folder folder2 = folderDao.findById(folderId);
+		assertEquals(1, folder2.getEntries().size());
 	}
 
 }

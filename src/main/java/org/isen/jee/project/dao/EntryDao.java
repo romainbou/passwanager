@@ -42,13 +42,21 @@ public class EntryDao {
     		entry.setUsername(username);
     		entry.setUser(creator);
     		entry.setValues(values);
-    		entry.setFolder(folder);
+    		if(folder.getEntries().size() < 1){
+    			List<Entry> entries = new ArrayList<Entry>();
+    			entries.add(entry);
+    			folder.setEntries(entries);
+    			entry.setFolder(folder);
+    		} else {
+    			folder.addEntry(entry);
+    		}
     		Date now = new Date();
     		entry.setCreatedAt(now);
     		
     		em.getTransaction().begin();
     		em.persist(entry);
-            em.flush();
+    		em.flush();
+    		em.merge(folder); // To get the id
             em.refresh(entry); // To get the id
     		em.getTransaction().commit();
     		

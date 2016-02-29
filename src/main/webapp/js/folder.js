@@ -2,6 +2,20 @@ function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
+var clickToDisplay = function() {
+  $(this).parent().hide();
+  $(this).parent().siblings(".to-copy").hide();
+  $(this).parent().siblings(".to-hide").show();
+  $(this).parent().siblings(".value").html("");
+}
+
+var clickToHide = function() {
+  $(this).parent(".to-hide").hide();
+  $(this).parent().siblings('.value').html("");
+  $(this).parent().siblings('.to-display').show();
+  $(this).parent().siblings('.to-copy').show();
+};
+
 $(document).ready(function() {
 
   $('body').hide();
@@ -57,6 +71,11 @@ $(document).ready(function() {
             <td></td>
             <td><a href="#"><i class="material-icons">delete</i></a></td>
           </tr>`);
+
+          $('.click-to-display', elem).bind("click", clickToDisplay);
+
+          $('.hide-value', elem).bind("click", clickToHide);
+
 
           $('#entries-table').append(elem);
         }

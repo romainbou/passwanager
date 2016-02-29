@@ -18,21 +18,6 @@ $(document).ready(function() {
     $("#share-with-list").append(add);
   });
 
-  $('.click-to-display').click(function() {
-    $(this).parent().hide();
-    $(this).parent().siblings(".to-copy").hide();
-    $(this).parent().siblings(".to-hide").show();
-    $(this).parent().siblings(".value").html("");
-  });
-
-  $('.hide-value').click(function() {
-    $(this).parent(".to-hide").hide();
-    $(this).parent().siblings('.value').html("");
-    $(this).parent().siblings('.to-display').show();
-    $(this).parent().siblings('.to-copy').show();
-  });
-
-
   $("#button-public-key-copy").click(function(event) {
     var copyTextarea =  $('#textarea-public-key');
     copyTextarea.select();

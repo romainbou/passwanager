@@ -41,16 +41,7 @@ public class User implements Serializable {
 	private List<Folder> ownedFolders;
 
 	//bi-directional many-to-many association to Folder
-	@ManyToMany
-	@JoinTable(
-		name="user_folder_link"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="folder_id")
-			}
-		)
+	@ManyToMany(mappedBy="users")
 	private List<Folder> folders;
 
 	//bi-directional many-to-one association to Value

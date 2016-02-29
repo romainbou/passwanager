@@ -27,9 +27,8 @@ public class FolderServletTest extends JettyHarness {
 		return getBaseUri() + "/folder";
 	}
 	
-	private String setupUserSession() {
+	private String setupUserSession(String email) {
 		UserDao userDao = new UserDao();
-    	String email = "bar@foo.com";
     	if(userDao.findByEmail(email) == null){
     		userDao.createNewUser(email, "john", "doe", "john_tester", "hackMe", "securePK");
     	}
@@ -53,7 +52,7 @@ public class FolderServletTest extends JettyHarness {
 	@Test
 	public void tryToGetExistingFolders() throws Exception {
 		
-		String sessionId = setupUserSession();
+		String sessionId = setupUserSession("bar@foo.com");
 		Map<String, String> params = new HashMap<>();
 		params.put("session_id", sessionId);
 		
@@ -68,7 +67,7 @@ public class FolderServletTest extends JettyHarness {
 	@Test
 	public void tryToGetExistingFolderFromId() throws Exception {
 		
-		String sessionId = setupUserSession();
+		String sessionId = setupUserSession("bar@foo.com");
 		Map<String, String> params = new HashMap<>();
 		params.put("session_id", sessionId);
 		
@@ -87,7 +86,7 @@ public class FolderServletTest extends JettyHarness {
 	@Test
 	public void createANewFolder() throws Exception {
 		
-		String sessionId = setupUserSession();
+		String sessionId = setupUserSession("bar@foo.com");
 		Map<String, String> params = new HashMap<>();
 		params.put("session_id", sessionId);
 		params.put("name", "super_secret");
@@ -99,7 +98,7 @@ public class FolderServletTest extends JettyHarness {
 	@Test
 	public void createANewFolderAndReturnIt() throws Exception {
 		
-		String sessionId = setupUserSession();
+		String sessionId = setupUserSession("bar@foo.com");
 		Map<String, String> params = new HashMap<>();
 		params.put("session_id", sessionId);
 		params.put("name", "super_secret");
@@ -112,15 +111,19 @@ public class FolderServletTest extends JettyHarness {
 	@Test
 	public void createANewFolderWith2Colabs() throws Exception {
 		
-		String sessionId = setupUserSession();
+		String sessionId = setupUserSession("bar@foo.com");
+		setupUserSession("foo@bar.com");
     	Map<String, String> params = new HashMap<>();
         params.put("session_id", sessionId);
-        params.put("name", "super_secret");
+        params.put("name", "super_secret2");
         params.put("colaborators", "bar@foo.com, foo@bar.com");
         String folderJson = post(getServletUri(), params);
         Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
         System.out.println(folderJson);
         assertEquals(2, folder.getUsers().size());
+        assertEquals("super_secret2", folder.getName());
+        assertEquals("bar@foo.com", folder.getUsers().get(0).getEmail());
+        assertEquals("foo@bar.com", folder.getUsers().get(1).getEmail());
 	}
 	
 	

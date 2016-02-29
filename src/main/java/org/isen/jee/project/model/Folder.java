@@ -1,7 +1,9 @@
 package org.isen.jee.project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +38,16 @@ public class Folder implements Serializable {
 	private User owner;
 
 	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="folders", cascade = CascadeType.PERSIST)
+	@ManyToMany
+	@JoinTable(
+		name="user_folder_link"
+		, joinColumns={
+				@JoinColumn(name="folder_id")
+		}
+		, inverseJoinColumns={
+				@JoinColumn(name="user_id")
+			}
+		)
 	private List<User> users;
 
 	public Folder() {

@@ -33,13 +33,14 @@ public class EntryDao {
     	return entry;
     }
     
-    public Entry createNewEntry(String title, String url, String notes, String username, Folder folder, List<Value> values){
+    public Entry createNewEntry(String title, String url, String notes, String username, Folder folder, User creator, List<Value> values){
     	Entry entry = new Entry();
     	try {
     		entry.setTitle(title);
     		entry.setUrl(url);
     		entry.setNotes(notes);
     		entry.setUsername(username);
+    		entry.setUser(creator);
     		entry.setValues(values);
     		entry.setFolder(folder);
     		Date now = new Date();

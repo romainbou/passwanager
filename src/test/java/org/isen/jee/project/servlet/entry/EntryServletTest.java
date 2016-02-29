@@ -8,6 +8,7 @@ import java.util.Map;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.harness.JettyHarness;
 import org.isen.jee.project.model.Folder;
+import org.isen.jee.project.servlet.folder.FolderServletTest;
 import org.isen.jee.project.servlet.user.SigninServletTest;
 import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
@@ -45,7 +46,8 @@ public class EntryServletTest extends JettyHarness {
 		params.put("session_id", sessionId);
 		params.put("name", "super_secret");
 		params.put("colaborators", "bar@foo.com, foo@bar.com");
-		Folder folder = (Folder) JsonReader.jsonToJava(post(getServletUri(), params));
+        FolderServletTest folderServlet = new FolderServletTest();
+		Folder folder = (Folder) JsonReader.jsonToJava(post(folderServlet.getServletUri(), params));
 		return folder.getId();
 	}
 

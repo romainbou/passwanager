@@ -57,7 +57,7 @@ public class EntryServlet extends PasswanagerServlet {
 //    		values.add(new org.isen.jee.project.model.Value());
 		}
     	Folder folder = folderDao.findById(Integer.parseInt(folderId));
-    	Entry newEntry = entryDao.createNewEntry(title, url, notes, username, folder, values);
+    	Entry newEntry = entryDao.createNewEntry(title, url, notes, username, folder, currentUser, values);
     	
     	String entryJson = JsonWriter.objectToJson(newEntry);
 		resp.getWriter().print(entryJson);

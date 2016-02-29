@@ -36,7 +36,7 @@ public class Folder implements Serializable {
 	private User owner;
 
 	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="folders")
+	@ManyToMany(mappedBy="folders", cascade = CascadeType.PERSIST)
 	private List<User> users;
 
 	public Folder() {

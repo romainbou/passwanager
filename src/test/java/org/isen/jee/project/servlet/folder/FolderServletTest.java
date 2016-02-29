@@ -100,13 +100,27 @@ public class FolderServletTest extends JettyHarness {
 	public void createANewFolderAndReturnIt() throws Exception {
 		
 		String sessionId = setupUserSession();
+		Map<String, String> params = new HashMap<>();
+		params.put("session_id", sessionId);
+		params.put("name", "super_secret");
+		params.put("colaborators", "bar@foo.com, foo@bar.com");
+		String folderJson = post(getServletUri(), params);
+		Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
+		assertEquals("super_secret", folder.getName());
+	}
+	
+	@Test
+	public void createANewFolderWith2Colabs() throws Exception {
+		
+		String sessionId = setupUserSession();
     	Map<String, String> params = new HashMap<>();
         params.put("session_id", sessionId);
         params.put("name", "super_secret");
         params.put("colaborators", "bar@foo.com, foo@bar.com");
         String folderJson = post(getServletUri(), params);
         Folder folder = (Folder) JsonReader.jsonToJava(folderJson);
-        assertEquals("super_secret", folder.getName());
+        System.out.println(folderJson);
+        assertEquals(2, folder.getUsers().size());
 	}
 	
 	

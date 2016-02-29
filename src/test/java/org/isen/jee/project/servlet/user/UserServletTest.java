@@ -1,4 +1,4 @@
-package org.isen.jee.project.servlet;
+package org.isen.jee.project.servlet.user;
 import static org.junit.Assert.assertEquals;
 
 import java.awt.List;

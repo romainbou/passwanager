@@ -39,7 +39,6 @@ public class FolderDao {
     		Date now = new Date();
     		folder.setCreatedAt(now);
     		users.add(owner);
-    		folder.setUsers(users);
     		List<Folder> ownerFolders = owner.getFolders();
     		if(ownerFolders == null){
     			ownerFolders = new ArrayList<Folder>();
@@ -49,9 +48,12 @@ public class FolderDao {
     		
     		em.getTransaction().begin();
     		em.persist(folder);
-            em.flush();
-            em.refresh(folder); // To get the id
+    		em.flush();
+            folder.setUsers(users);
+            em.merge(folder);
     		em.merge(owner);
+    		em.flush();
+    		em.refresh(folder); // To get the id
     		em.getTransaction().commit();
     		
     	} catch (SecurityException | IllegalStateException e) {

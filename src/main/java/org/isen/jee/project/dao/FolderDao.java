@@ -110,8 +110,9 @@ public class FolderDao {
     		Folder foundFolder = (Folder) em.createQuery("SELECT f FROM Folder f WHERE f.id = :id")
     			.setParameter("id", id).getSingleResult();
     		if(foundFolder != null){
+    			EntryDao entryDao = new EntryDao();
     			for (Entry entry : foundFolder.getEntries()) {
-    				em.remove(entry);
+    				entryDao.delete(entry.getId());
 				}
     			em.remove(foundFolder);
     			done = true;

@@ -109,8 +109,8 @@ INSERT INTO `user_folder_link` (`user_id`, `folder_id`) VALUES
 CREATE TABLE `value` (
   `id` int(11) NOT NULL,
   `value` text NOT NULL,
-  `ref_user` int(11) NOT NULL,
-  `ref_entry` int(11) NOT NULL
+  `ref_user` int(11),
+  `ref_entry` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -188,7 +188,7 @@ ALTER TABLE `value`
 -- Constraints for table `entry`
 --
 ALTER TABLE `entry`
-  ADD CONSTRAINT `fk_entity_folder1` FOREIGN KEY (`ref_folder`) REFERENCES `folder` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_entity_folder1` FOREIGN KEY (`ref_folder`) REFERENCES `folder` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_entity_user1` FOREIGN KEY (`ref_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
@@ -208,7 +208,7 @@ ALTER TABLE `user_folder_link`
 -- Constraints for table `value`
 --
 ALTER TABLE `value`
-  ADD CONSTRAINT `fk_value_entity1` FOREIGN KEY (`ref_entry`) REFERENCES `entry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_value_entity1` FOREIGN KEY (`ref_entry`) REFERENCES `entry` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_value_user1` FOREIGN KEY (`ref_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

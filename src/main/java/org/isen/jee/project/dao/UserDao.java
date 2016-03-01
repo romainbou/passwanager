@@ -100,12 +100,12 @@ public class UserDao {
     		User foundUser = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")
     			.setParameter("email", email).getSingleResult();
     		if(foundUser != null){
-    			em.remove(foundUser);
     			List<Folder> ownedFolder = foundUser.getOwnedFolders();
     			FolderDao folderDao = new FolderDao();
     			for (Folder folder : ownedFolder) {
     				folderDao.delete(folder.getId());
     			}
+    			em.remove(foundUser);
     			done = true;
     		}
     		em.getTransaction().commit();

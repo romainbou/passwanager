@@ -91,6 +91,11 @@ public class EntryDao {
     		Entry foundEntry = (Entry) em.createQuery("SELECT e FROM Entry e WHERE e.id = :id")
     			.setParameter("id", id).getSingleResult();
     		if(foundEntry != null){
+    			List<Value> values = foundEntry.getValues();
+    			ValueDao valueDao = new ValueDao();
+    			for (Value value: values) {
+    				valueDao.delete(value.getId());
+    			}
     			em.remove(foundEntry);
     			done = true;
     		}

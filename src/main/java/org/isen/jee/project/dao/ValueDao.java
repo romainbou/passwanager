@@ -102,7 +102,10 @@ public class ValueDao {
     		em.getTransaction().begin();
     		Value foundValue = (Value) em.createQuery("SELECT v FROM Value v WHERE v.id = :id")
     			.setParameter("id", id).getSingleResult();
+    		foundValue.setUser(null);
+    		foundValue.setEntry(null);
     		if(foundValue != null){
+    			em.merge(foundValue);
     			em.remove(foundValue);
     			done = true;
     		}

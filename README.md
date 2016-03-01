@@ -41,4 +41,4 @@ Launch your browser to `http://localhost:8080`
 ![entries view](http://i.imgur.com/fIP9fGD.png "Entries view")
 
 ## TODO
-* Send each private keys of a folder's members to let a user encrypt a password for each member
+* Send each public keys of a folder's members to let a user encrypt a password for each member

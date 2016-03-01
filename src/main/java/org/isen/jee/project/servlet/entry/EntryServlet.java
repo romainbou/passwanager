@@ -2,6 +2,7 @@ package org.isen.jee.project.servlet.entry;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,12 +42,14 @@ public class EntryServlet extends PasswanagerServlet {
 			return;
 		}
 		
-		String title = req.getParameter("title");
+		String title = req.getParameter("title");		
 		String url = req.getParameter("url");
 		String notes = req.getParameter("notes");
+		String username = req.getParameter("username");
 		String folderId = req.getParameter("folder");
     	String valuesString = req.getParameter("values");
     	String[] valuesStringArray = valuesString.split(",", -1);
+    	
     	
     	List<Value> values = new ArrayList<>();
     	for (String value : valuesStringArray) {
@@ -54,7 +57,7 @@ public class EntryServlet extends PasswanagerServlet {
 //    		values.add(new org.isen.jee.project.model.Value());
 		}
     	Folder folder = folderDao.findById(Integer.parseInt(folderId));
-    	Entry newEntry = entryDao.createNewEntry(title, url, notes, folder, values);
+    	Entry newEntry = entryDao.createNewEntry(title, url, notes, username, folder, values);
     	
     	String entryJson = JsonWriter.objectToJson(newEntry);
 		resp.getWriter().print(entryJson);

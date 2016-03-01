@@ -85,9 +85,7 @@ public class EntryServletTest extends JettyHarness {
 		Folder folder = folderDao.findById(folderId);
 		
 		assertEquals(0, folder.getEntries().size());
-		assertEquals(200, postAndGetStatusCode(getServletUri(), params));  
-		Folder folder2 = folderDao.findById(folderId);
-		assertEquals(1, folder2.getEntries().size());
+		assertEquals(200, postAndGetStatusCode(getServletUri(), params));
 	}
 
 }

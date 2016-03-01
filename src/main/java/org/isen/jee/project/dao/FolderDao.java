@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
 
@@ -109,6 +110,9 @@ public class FolderDao {
     		Folder foundFolder = (Folder) em.createQuery("SELECT f FROM Folder f WHERE f.id = :id")
     			.setParameter("id", id).getSingleResult();
     		if(foundFolder != null){
+    			for (Entry entry : foundFolder.getEntries()) {
+    				em.remove(entry);
+				}
     			em.remove(foundFolder);
     			done = true;
     		}

@@ -33,5 +33,12 @@ Launch your browser to `http://localhost:8080`
 ## Features
 * Add folders with collaborators
 
+## Screenshots
+![keypair screen](http://i.imgur.com/CoVyZpt.png "Keypair screen")
+
+![folders view](http://i.imgur.com/EMmSXO7.png "Folders view")
+
+![entries view](http://i.imgur.com/fIP9fGD.png "Entries view")
+
 ## TODO
 * Send each private keys of a folder's members to let a user encrypt a password for each member

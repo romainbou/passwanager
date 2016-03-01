@@ -180,6 +180,16 @@ $(document).ready(function() {
           </tr>`);
 
           $('#entries-table').append(elem);
+
+          $("#errors-block").hide();
+          $('#title').val("");
+          $('#username').val("");
+          $('#password').val("");
+          $('#verifypassword').val("");
+          $('#url').val("");
+          $('#notes').val("");
+          $(".modal").hide();
+
         }
 
       })

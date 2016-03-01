@@ -9,7 +9,7 @@ On singup, a keypair is generated client-side. The user has to keep the private 
 ### Database configuration
 Required: MySQL database
 
-Use the file `database.sql` in the root folder to import the database
+Use the file `passwanager.sql` in the root folder to import the database
 Create a mysql user and database called `passwanager`
 Set its password to `i4BKwffH244SdtfR` or change it in the file `src/main/resources/META-INF/persistence.xml`
 

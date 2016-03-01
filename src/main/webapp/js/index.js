@@ -30,8 +30,10 @@ $(document).ready(function() {
     var elements = dataReceived["@items"];
 
     if(elements) {
-      for (var i = 0; i < elements.length; i++) {
-        var item = JSON.parse(elements[i]);
+      for (var j = 0; j < elements.length; j++) {
+
+
+        var item = JSON.parse(elements[j]);
 
         var owner = item.owner.firstname + " " + item.owner.lastname;
         if(item.owner.email == sessionStorage.getItem("email")) {
@@ -52,7 +54,6 @@ $(document).ready(function() {
           }
 
         }
-
 
 
         var elem = $(`<div class="list-group-item">

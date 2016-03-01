@@ -123,6 +123,17 @@ public class FolderDao {
     	return done;
     }
     
+    public Folder refresh(Folder folder){
+    	try{
+    		em.getTransaction().begin();
+    		em.refresh(folder);
+    		em.getTransaction().commit();
+    	}  catch (SecurityException | IllegalStateException | NoResultException e) {
+            return null;
+        }
+    	return folder;
+    }
+    
     public List<Folder> getAll(){
     	List<Folder> Folders = (List<Folder>) em.createQuery("SELECT f FROM Folder f").getResultList();
     	return Folders;

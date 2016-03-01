@@ -13,9 +13,16 @@ import org.isen.jee.project.model.User;
 import org.isen.jee.project.model.Value;
 
 
-public class EntryDao {  
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("passwanager");
-    EntityManager em = emf.createEntityManager( );
+public class EntryDao {
+	
+	EntityManagerFactory emf;
+	EntityManager em;
+	
+	public EntryDao() {
+		emf = Persistence.createEntityManagerFactory("passwanager");
+		em = emf.createEntityManager( );
+	}
+	
     
     public Entry createNewEntry() {
     	
@@ -33,7 +40,7 @@ public class EntryDao {
     	return entry;
     }
     
-    public Entry createNewEntry(String title, String url, String notes, String username, Folder folder, User creator, List<Value> values){
+    public Entry createNewEntry(String title, String url, String notes, String username, Folder folder, User creator){
     	Entry entry = new Entry();
     	try {
     		entry.setTitle(title);
@@ -41,7 +48,7 @@ public class EntryDao {
     		entry.setNotes(notes);
     		entry.setUsername(username);
     		entry.setUser(creator);
-    		entry.setValues(values);
+    		entry.setValues(new ArrayList<Value>());
     		if(folder.getEntries().size() < 1){
     			List<Entry> entries = new ArrayList<Entry>();
     			entries.add(entry);
@@ -92,6 +99,17 @@ public class EntryDao {
             return done;
         }
     	return done;
+    }
+    
+    public Entry refresh(Entry entry){
+    	try{
+    		em.getTransaction().begin();
+    		em.refresh(entry);
+    		em.getTransaction().commit();
+    	}  catch (SecurityException | IllegalStateException | NoResultException e) {
+            return null;
+        }
+    	return entry;
     }
     
     public List<Entry> getAll(){

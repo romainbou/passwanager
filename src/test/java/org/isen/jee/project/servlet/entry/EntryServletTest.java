@@ -5,9 +5,11 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.isen.jee.project.dao.EntryDao;
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
 import org.isen.jee.project.harness.JettyHarness;
+import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.servlet.folder.FolderServletTest;
 import org.isen.jee.project.servlet.user.SigninServletTest;
@@ -79,13 +81,37 @@ public class EntryServletTest extends JettyHarness {
 		params.put("title", "Cool password");
 		params.put("url", "http://example.com");
 		params.put("username", "jenny");
-		params.put("values", "xy, yz");
+		params.put("values", "yz");
 		
 		FolderDao folderDao = new FolderDao();
 		Folder folder = folderDao.findById(folderId);
 		
 		assertEquals(0, folder.getEntries().size());
 		assertEquals(200, postAndGetStatusCode(getServletUri(), params));
+	}
+	
+	@Test
+	public void createANewEntryAndInsertValue() throws Exception {
+		
+		String sessionId = setupUserSession("bar@foo.com");
+		Map<String, String> params = new HashMap<>();
+		Integer folderId = createFolder();
+		params.put("session_id", sessionId);
+		params.put("folder", folderId.toString());
+		params.put("title", "Cool password");
+		params.put("url", "http://example.com");
+		params.put("username", "jenny");
+		params.put("values", "xy");
+		
+		FolderDao folderDao = new FolderDao();
+		EntryDao entryDao = new EntryDao();
+		Folder folder = folderDao.findById(folderId);
+		int nb_entries = folder.getEntries().size();
+		assertEquals(0, nb_entries);
+		assertEquals(200, postAndGetStatusCode(getServletUri(), params));
+		folder = folderDao.refresh(folder);
+		nb_entries = folder.getEntries().size();
+		assertEquals(1, nb_entries);
 	}
 
 }

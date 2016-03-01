@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.isen.jee.project.dao.EntryDao;
 import org.isen.jee.project.dao.FolderDao;
 import org.isen.jee.project.dao.UserDao;
+import org.isen.jee.project.dao.ValueDao;
 import org.isen.jee.project.model.Entry;
 import org.isen.jee.project.model.Folder;
 import org.isen.jee.project.model.User;
@@ -52,13 +53,14 @@ public class EntryServlet extends PasswanagerServlet {
     	
     	
     	List<Value> values = new ArrayList<>();
-    	for (String value : valuesStringArray) {
-    		// TODO Json parse
-//    		values.add(new org.isen.jee.project.model.Value());
-		}
     	Folder folder = folderDao.findById(Integer.parseInt(folderId));
-    	Entry newEntry = entryDao.createNewEntry(title, url, notes, username, folder, currentUser, values);
-    	
+    	Entry newEntry = entryDao.createNewEntry(title, url, notes, username, folder, currentUser);
+    	ValueDao valueDao = new ValueDao();
+    	for (String value : valuesStringArray) {
+    		Value newValue = valueDao.createNewValue(value, newEntry, currentUser);
+    		values.add(newValue);
+    	}
+    	newEntry.setValues(values);
     	String entryJson = JsonWriter.objectToJson(newEntry);
 		resp.getWriter().print(entryJson);
     	
